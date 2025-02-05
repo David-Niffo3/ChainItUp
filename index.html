@@ -17,22 +17,11 @@
         
         <button onclick="checkAnswer()">Check</button>
         <p id="feedback"></p>
-
-        <div id="scoreContainer">
-            <p>Score: <strong id="score">100</strong></p>
-            <p>Time Remaining: <strong id="timeRemaining">60</strong> seconds</p>
-        </div>
     </div>
 
     <div class="container hidden" id="winScreen">
         <h1>🎉 You Won! 🎉</h1>
         <p>Congratulations! You completed the word chain.</p>
-        <button onclick="restartGame()">Play Again</button>
-    </div>
-
-    <div class="container hidden" id="loseScreen">
-        <h1>💥 You Lost! 💥</h1>
-        <p>Sorry, your time is up! Try again next time.</p>
         <button onclick="restartGame()">Play Again</button>
     </div>
 

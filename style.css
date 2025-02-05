@@ -3,10 +3,10 @@
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    background-color: #004b87;
+    background-color: #C7DDF5; /* Lichte achtergrondkleur */
     margin: 0;
     padding: 0;
-    color: white;
+    color: #336799; /* Donkerblauwe tekstkleur */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -14,7 +14,7 @@ body {
 
 .container {
     margin-top: 20px;
-    background: #0077c8;
+    background: #9ACEFF; /* Lichte blauwe achtergrond voor het spelgedeelte */
     padding: 20px;
     width: 80%;
     max-width: 400px;
@@ -34,7 +34,7 @@ h1 {
     font-size: 28px;
     font-weight: 600;
     text-transform: uppercase;
-    color: #ffcc00;
+    color: #336799; /* Donkerblauwe tekstkleur */
 }
 
 p {
@@ -54,9 +54,9 @@ p {
     height: 40px;
     font-size: 24px;
     text-align: center;
-    border: 2px solid white;
-    background-color: white;
-    color: #004b87;
+    border: 2px solid #336799; /* Donkerblauwe randkleur */
+    background-color: #669ACC; /* Blauwe lettervakjes */
+    color: #336799; /* Donkerblauwe tekstkleur */
     font-weight: bold;
     border-radius: 5px;
     text-transform: uppercase;
@@ -67,21 +67,22 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
-    background-color: #ffcc00;
-    color: #004b87;
+    background-color: #9ACEFF; /* Lichte blauwe achtergrondkleur voor de knop */
+    color: #336799; /* Donkerblauwe tekstkleur voor de knop */
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
 button:hover {
-    background-color: #ffdd44;
+    background-color: #669ACC; /* Donkerdere blauwe knop bij hover */
 }
 
 #feedback {
     font-size: 22px;
     font-weight: bold;
     margin-top: 15px;
+    color: #336799; /* Donkerblauwe tekstkleur voor feedback */
 }
 
 /* Animation for correct answers */
@@ -110,8 +111,8 @@ button:hover {
 
 /* Info board styling */
 .info-board {
-    background: #ffcc00;
-    color: #004b87;
+    background: #9ACEFF; /* Lichte blauwe achtergrond voor de informatiebox */
+    color: #336799; /* Donkerblauwe tekstkleur */
     padding: 15px;
     margin: 20px auto;
     width: 80%;

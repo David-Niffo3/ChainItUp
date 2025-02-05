@@ -60,8 +60,8 @@ function checkAnswer() {
   let feedback = document.getElementById("feedback");
 
   if (wordChain[currentWord] === enteredWord) {
-      feedback.textContent = `✅ ${enteredWord};
-      feedback.style.color = "#336799";
+      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
+      feedback.style.color = "#ffcc00";
       feedback.classList.add("correct");
       setTimeout(() => feedback.classList.remove("correct"), 500);
 

@@ -1,106 +1,98 @@
-// List of example word pairs for the game
-const wordPairs = [
-    { first: 'apple', second: 'tree' },
-    { first: 'book', second: 'shelf' },
-    { first: 'car', second: 'wheel' },
-    { first: 'dog', second: 'bone' },
-    { first: 'house', second: 'roof' }
-];
+const wordChain = {
+  "apple": "tree",
+  "tree": "house",
+  "house": "fire",
+  "fire": "fighter",
+  "fighter": "jet"
+};
 
-let currentWord = wordPairs[0].first;
-let currentPair = wordPairs[0];
-let guess = "";
+let currentWord = "apple"; // Starting word
+document.getElementById("currentWord").textContent = currentWord;
 
-// Function to start the game and display the initial word
-function startGame() {
-    document.getElementById('currentWord').textContent = currentWord;
-    generateInputBoxes();
+function createInputFields(word) {
+  const container = document.getElementById("inputContainer");
+  container.innerHTML = ""; // Clear previous input fields
+
+  for (let i = 0; i < word.length; i++) {
+      let input = document.createElement("input");
+      input.type = "text";
+      input.classList.add("letter-box");
+      input.maxLength = 1;
+      input.setAttribute("data-index", i);
+
+      // Auto-focus to next box when typing
+      input.addEventListener("input", function () {
+          if (this.value.length === 1) {
+              let nextInput = this.nextElementSibling;
+              if (nextInput) nextInput.focus();
+          }
+      });
+
+      // Move focus on backspace
+      input.addEventListener("keydown", function (event) {
+          if (event.key === "Backspace" && this.value === "") {
+              let prevInput = this.previousElementSibling;
+              if (prevInput) {
+                  prevInput.value = ""; // Clear previous box
+                  prevInput.focus();
+              }
+          }
+          if (event.key === "Enter") {
+              checkAnswer(); // Press Enter to submit
+          }
+      });
+
+      container.appendChild(input);
+  }
+
+  // Focus first box when generating inputs
+  if (container.firstChild) {
+      container.firstChild.focus();
+  }
 }
 
-// Function to generate input boxes for each letter in the word
-function generateInputBoxes() {
-    const inputContainer = document.getElementById('inputContainer');
-    inputContainer.innerHTML = ''; // Clear any previous input fields
+// Initialize first input fields
+createInputFields(wordChain[currentWord]);
 
-    // Generate letter boxes based on the word length
-    for (let i = 0; i < currentWord.length; i++) {
-        const letterBox = document.createElement('input');
-        letterBox.type = 'text';
-        letterBox.maxLength = 1;
-        letterBox.classList.add('letter-box');
-        letterBox.dataset.index = i;
-        inputContainer.appendChild(letterBox);
-    }
-}
-
-// Function to check the player's guess
 function checkAnswer() {
-    let guess = '';
-    const letterBoxes = document.querySelectorAll('.letter-box');
+  let inputLetters = document.querySelectorAll(".letter-box");
+  let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
+  let feedback = document.getElementById("feedback");
 
-    // Collect all the letters from the input boxes
-    letterBoxes.forEach(box => {
-        guess += box.value.toLowerCase();
-    });
+  if (wordChain[currentWord] === enteredWord) {
+      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
+      feedback.style.color = "#ffcc00";
+      feedback.classList.add("correct");
+      setTimeout(() => feedback.classList.remove("correct"), 500);
 
-    // Check if the guessed word is correct
-    if (guess === currentPair.first + currentPair.second) {
-        document.getElementById('feedback').textContent = 'Correct! You guessed the word!';
-        document.getElementById('feedback').style.color = 'green';
-        nextRound();
-    } else {
-        document.getElementById('feedback').textContent = 'Incorrect. Try again!';
-        document.getElementById('feedback').style.color = 'red';
-    }
+      currentWord = enteredWord; // Set new word
+      document.getElementById("currentWord").textContent = currentWord;
+
+      if (!wordChain[currentWord]) {
+          showWinScreen();
+      } else {
+          createInputFields(wordChain[currentWord]);
+      }
+  } else {
+      feedback.textContent = "❌ Incorrect! Try again.";
+      feedback.style.color = "red";
+      feedback.classList.add("wrong");
+      setTimeout(() => feedback.classList.remove("wrong"), 300);
+  }
 }
 
-// Function to move to the next round
-function nextRound() {
-    const currentIndex = wordPairs.indexOf(currentPair);
-    if (currentIndex + 1 < wordPairs.length) {
-        currentPair = wordPairs[currentIndex + 1];
-        currentWord = currentPair.first;
-        document.getElementById('currentWord').textContent = currentWord;
-        generateInputBoxes();
-    } else {
-        // Game Over
-        document.getElementById('gameContainer').classList.add('hidden');
-        document.getElementById('winScreen').classList.remove('hidden');
-    }
+// Show win screen
+function showWinScreen() {
+  document.getElementById("gameContainer").classList.add("hidden");
+  document.getElementById("winScreen").classList.remove("hidden");
 }
 
-// Function to restart the game
+// Restart game
 function restartGame() {
-    currentPair = wordPairs[0];
-    currentWord = currentPair.first;
-    document.getElementById('currentWord').textContent = currentWord;
-    generateInputBoxes();
-    document.getElementById('gameContainer').classList.remove('hidden');
-    document.getElementById('winScreen').classList.add('hidden');
-    document.getElementById('feedback').textContent = '';
+  currentWord = "apple";
+  document.getElementById("currentWord").textContent = currentWord;
+  document.getElementById("gameContainer").classList.remove("hidden");
+  document.getElementById("winScreen").classList.add("hidden");
+  document.getElementById("feedback").textContent = "";
+  createInputFields(wordChain[currentWord]);
 }
-
-// Event listener to handle the "Enter" key for checking the word
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        checkAnswer();
-    }
-});
-
-// Event listener for the "Backspace" key to delete letters
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Backspace') {
-        const letterBoxes = document.querySelectorAll('.letter-box');
-        for (let i = letterBoxes.length - 1; i >= 0; i--) {
-            if (letterBoxes[i].value === '') {
-                continue;
-            } else {
-                letterBoxes[i].value = '';
-                break;
-            }
-        }
-    }
-});
-
-// Start the game when the page loads
-window.onload = startGame;

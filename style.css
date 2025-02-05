@@ -34,15 +34,24 @@ p {
     margin: 10px 0;
 }
 
-input {
-    font-size: 20px;
-    padding: 10px;
-    width: 80%;
-    border-radius: 5px;
-    border: 2px solid #ffcc00;
+#inputContainer {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.letter-box {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
     text-align: center;
+    border: 2px solid white;
     background-color: white;
-    color: #333;
+    color: #004b87;
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
 }
 
 button {
@@ -67,7 +76,7 @@ button:hover {
     margin-top: 15px;
 }
 
-/* Animatie voor correcte antwoorden */
+/* Animation for correct answers */
 .correct {
     animation: correctAnim 0.5s ease-in-out;
 }
@@ -78,7 +87,7 @@ button:hover {
     100% { transform: scale(1); }
 }
 
-/* Animatie voor foute antwoorden */
+/* Animation for incorrect answers */
 .wrong {
     animation: shake 0.3s ease-in-out;
 }

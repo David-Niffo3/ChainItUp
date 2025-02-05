@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +9,16 @@
 </head>
 <body>
 
-    <!-- Best Score Box -->
-    <div class="best-score-container">
-        <h2>Best Score</h2>
-        <p id="bestScore">0</p>
-    </div>
-
     <!-- Game Section -->
     <div class="container" id="gameContainer">
         <h1>Guess the next word!</h1>
         <p>Starting word: <strong id="currentWord"></strong></p>
         
+        <!-- Score Display -->
+        <p>Score: <span id="score">100</span></p> <!-- Score wordt hier getoond -->
+        <p>Best Score: <span id="bestScore">0</span></p> <!-- Best Score wordt hier getoond -->
+
         <div id="inputContainer"></div>  <!-- Letter boxes will be generated here -->
-        
-        <p>Score: <strong id="score">100</strong></p>
         
         <button onclick="checkAnswer()">Check</button>
         <p id="feedback"></p>

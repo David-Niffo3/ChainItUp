@@ -19,7 +19,7 @@ function startTimer() {
     timer = setInterval(function () {
         if (timeLeft <= 0) {
             clearInterval(timer); // Stop de timer als de tijd om is
-            document.getElementById("feedback").textContent = "⏰ Time's up! Try again.";
+            document.getElementById("feedback").textContent = "❌ Time's up! You failed.";
             document.getElementById("feedback").style.color = "red";
             setTimeout(() => {
                 document.getElementById("feedback").textContent = "";

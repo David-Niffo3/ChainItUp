@@ -1,34 +1,27 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    background-color: #C7DDF5; /* Lichte achtergrondkleur */
+    background-color: #C7DDF5;
     margin: 0;
     padding: 0;
-    color: #336799; /* Donkerblauwe tekstkleur */
+    color: #336799;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     min-height: 100vh;
 }
 
-/* Best Score Box */
-.best-score-container {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #9ACEFF; /* Lichte blauwe achtergrond voor de score box */
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    color: #336799;
-    font-size: 20px;
+#scoreBoard {
+    background-color: #336799;
+    color: #fff;
+    padding: 10px 0;
 }
 
 .container {
     margin-top: 20px;
-    background: #9ACEFF; /* Lichte blauwe achtergrond voor het spelgedeelte */
+    background: #9ACEFF;
     padding: 20px;
     width: 80%;
     max-width: 400px;
@@ -48,7 +41,7 @@ h1 {
     font-size: 28px;
     font-weight: 600;
     text-transform: uppercase;
-    color: #336799; /* Donkerblauwe tekstkleur */
+    color: #336799;
 }
 
 p {
@@ -68,9 +61,9 @@ p {
     height: 40px;
     font-size: 24px;
     text-align: center;
-    border: 2px solid #336799; /* Donkerblauwe randkleur */
-    background-color: #669ACC; /* Blauwe lettervakjes */
-    color: #336799; /* Donkerblauwe tekstkleur */
+    border: 2px solid #336799;
+    background-color: #669ACC;
+    color: #336799;
     font-weight: bold;
     border-radius: 5px;
     text-transform: uppercase;
@@ -81,25 +74,24 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
-    background-color: #9ACEFF; /* Lichte blauwe achtergrondkleur voor de knop */
-    color: #336799; /* Donkerblauwe tekstkleur voor de knop */
+    background-color: #9ACEFF;
+    color: #336799;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
 button:hover {
-    background-color: #669ACC; /* Donkerdere blauwe knop bij hover */
+    background-color: #669ACC;
 }
 
 #feedback {
     font-size: 22px;
     font-weight: bold;
     margin-top: 15px;
-    color: #336799; /* Donkerblauwe tekstkleur voor feedback */
+    color: #336799;
 }
 
-/* Animation for correct answers */
 .correct {
     animation: correctAnim 0.5s ease-in-out;
 }
@@ -110,7 +102,6 @@ button:hover {
     100% { transform: scale(1); }
 }
 
-/* Animation for incorrect answers */
 .wrong {
     animation: shake 0.3s ease-in-out;
 }
@@ -123,10 +114,9 @@ button:hover {
     100% { transform: translateX(0); }
 }
 
-/* Info board styling */
 .info-board {
-    background: #9ACEFF; /* Lichte blauwe achtergrond voor de informatiebox */
-    color: #336799; /* Donkerblauwe tekstkleur */
+    background: #9ACEFF;
+    color: #336799;
     padding: 15px;
     margin: 20px auto;
     width: 80%;

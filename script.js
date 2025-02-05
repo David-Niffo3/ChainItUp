@@ -9,6 +9,29 @@ const wordChain = {
 let currentWord = "apple"; // Starting word
 document.getElementById("currentWord").textContent = currentWord;
 
+let timer;
+let timeLeft = 60;  // Starttijd in seconden
+
+// Start timer bij het laden van een nieuw woord
+function startTimer() {
+    timeLeft = 60; // Reset de timer
+    document.getElementById("timer").textContent = `Time left: ${timeLeft}s`; // Toon timer
+    timer = setInterval(function () {
+        if (timeLeft <= 0) {
+            clearInterval(timer); // Stop de timer als de tijd om is
+            document.getElementById("feedback").textContent = "⏰ Time's up! Try again.";
+            document.getElementById("feedback").style.color = "red";
+            setTimeout(() => {
+                document.getElementById("feedback").textContent = "";
+            }, 1000);
+            checkAnswer(); // Forceer een antwoord wanneer de tijd om is
+        } else {
+            timeLeft--; // Verlaag de tijd
+            document.getElementById("timer").textContent = `Time left: ${timeLeft}s`; // Toon de resterende tijd
+        }
+    }, 1000);
+}
+
 function createInputFields(word) {
     const container = document.getElementById("inputContainer");
     container.innerHTML = ""; // Clear previous input fields
@@ -53,6 +76,7 @@ function createInputFields(word) {
 
 // Initialize first input fields
 createInputFields(wordChain[currentWord]);
+startTimer(); // Start de timer bij het laden van het eerste woord
 
 function checkAnswer() {
     let inputLetters = document.querySelectorAll(".letter-box");
@@ -72,6 +96,7 @@ function checkAnswer() {
             showWinScreen();
         } else {
             createInputFields(wordChain[currentWord]);
+            startTimer(); // Start de timer opnieuw voor het nieuwe woord
         }
     } else {
         feedback.textContent = "❌ Incorrect! Try again.";
@@ -85,6 +110,7 @@ function checkAnswer() {
 function showWinScreen() {
     document.getElementById("gameContainer").classList.add("hidden");
     document.getElementById("winScreen").classList.remove("hidden");
+    clearInterval(timer); // Stop de timer wanneer je hebt gewonnen
 }
 
 // Restart game
@@ -95,4 +121,5 @@ function restartGame() {
     document.getElementById("winScreen").classList.add("hidden");
     document.getElementById("feedback").textContent = "";
     createInputFields(wordChain[currentWord]);
+    startTimer(); // Start de timer opnieuw
 }

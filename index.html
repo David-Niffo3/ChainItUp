@@ -8,8 +8,22 @@
 </head>
 <body>
 
+    <!-- Start Screen -->
+    <div id="startScreen" class="container">
+        <h1>Welcome to the Word Guessing Game!</h1>
+        <button id="playButton">Play</button>
+    </div>
+
+    <!-- Difficulty Screen -->
+    <div id="difficultyScreen" class="container hidden">
+        <h1>Choose Difficulty</h1>
+        <button onclick="startGame('easy')">Easy</button>
+        <button onclick="startGame('medium')">Medium</button>
+        <button onclick="startGame('hard')">Hard</button>
+    </div>
+
     <!-- Game Section -->
-    <div class="container" id="gameContainer">
+    <div class="container hidden" id="gameContainer">
         <h1>Guess the next word!</h1>
         <p>Starting word: <strong id="currentWord"></strong></p>
         

@@ -1,13 +1,47 @@
-const wordChain = {
-  "apple": "tree",
-  "tree": "house",
-  "house": "fire",
-  "fire": "fighter",
-  "fighter": "jet"
+const wordChains = {
+  easy: {
+      "apple": "tree",
+      "tree": "house",
+      "house": "fire",
+      "fire": "fighter",
+      "fighter": "jet"
+  },
+  medium: {
+      "apple": "banana",
+      "banana": "cherry",
+      "cherry": "fruit",
+      "fruit": "salad",
+      "salad": "dressing"
+  },
+  hard: {
+      "zebra": "stripes",
+      "stripes": "tiger",
+      "tiger": "jungle",
+      "jungle": "rainforest",
+      "rainforest": "animals"
+  }
 };
 
-let currentWord = "apple"; // Starting word
-document.getElementById("currentWord").textContent = currentWord;
+let currentWord = "";
+let currentChain = {};
+let difficultyLevel = "";
+
+document.getElementById("playButton").addEventListener("click", function() {
+  document.getElementById("startScreen").classList.add("hidden");
+  document.getElementById("difficultyScreen").classList.remove("hidden");
+});
+
+function startGame(difficulty) {
+  difficultyLevel = difficulty;
+  currentChain = wordChains[difficultyLevel];
+  currentWord = Object.keys(currentChain)[0];
+  document.getElementById("currentWord").textContent = currentWord;
+
+  document.getElementById("difficultyScreen").classList.add("hidden");
+  document.getElementById("gameContainer").classList.remove("hidden");
+
+  createInputFields(currentChain[currentWord]);
+}
 
 function createInputFields(word) {
   const container = document.getElementById("inputContainer");
@@ -20,7 +54,6 @@ function createInputFields(word) {
       input.maxLength = 1;
       input.setAttribute("data-index", i);
 
-      // Auto-focus to next box when typing
       input.addEventListener("input", function () {
           if (this.value.length === 1) {
               let nextInput = this.nextElementSibling;
@@ -28,50 +61,41 @@ function createInputFields(word) {
           }
       });
 
-      // Move focus on backspace
       input.addEventListener("keydown", function (event) {
           if (event.key === "Backspace" && this.value === "") {
               let prevInput = this.previousElementSibling;
               if (prevInput) {
-                  prevInput.value = ""; // Clear previous box
+                  prevInput.value = "";
                   prevInput.focus();
               }
           }
           if (event.key === "Enter") {
-              checkAnswer(); // Press Enter to submit
+              checkAnswer();
           }
       });
 
       container.appendChild(input);
   }
-
-  // Focus first box when generating inputs
-  if (container.firstChild) {
-      container.firstChild.focus();
-  }
 }
-
-// Initialize first input fields
-createInputFields(wordChain[currentWord]);
 
 function checkAnswer() {
   let inputLetters = document.querySelectorAll(".letter-box");
   let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
   let feedback = document.getElementById("feedback");
 
-  if (wordChain[currentWord] === enteredWord) {
+  if (currentChain[currentWord] === enteredWord) {
       feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
       feedback.style.color = "#ffcc00";
       feedback.classList.add("correct");
       setTimeout(() => feedback.classList.remove("correct"), 500);
 
-      currentWord = enteredWord; // Set new word
+      currentWord = enteredWord;
       document.getElementById("currentWord").textContent = currentWord;
 
-      if (!wordChain[currentWord]) {
+      if (!currentChain[currentWord]) {
           showWinScreen();
       } else {
-          createInputFields(wordChain[currentWord]);
+          createInputFields(currentChain[currentWord]);
       }
   } else {
       feedback.textContent = "❌ Incorrect! Try again.";
@@ -81,18 +105,12 @@ function checkAnswer() {
   }
 }
 
-// Show win screen
 function showWinScreen() {
   document.getElementById("gameContainer").classList.add("hidden");
   document.getElementById("winScreen").classList.remove("hidden");
 }
 
-// Restart game
 function restartGame() {
-  currentWord = "apple";
-  document.getElementById("currentWord").textContent = currentWord;
-  document.getElementById("gameContainer").classList.remove("hidden");
   document.getElementById("winScreen").classList.add("hidden");
-  document.getElementById("feedback").textContent = "";
-  createInputFields(wordChain[currentWord]);
+  document.getElementById("startScreen").classList.remove("hidden");
 }

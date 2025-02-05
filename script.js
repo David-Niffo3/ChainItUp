@@ -60,6 +60,7 @@ function checkAnswer() {
   let feedback = document.getElementById("feedback");
 
   if (wordChain[currentWord] === enteredWord) {
+      feedback.textContent = ✅;
       feedback.classList.add("correct");
       setTimeout(() => feedback.classList.remove("correct"), 500);
 

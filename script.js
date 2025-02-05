@@ -6,12 +6,14 @@ const wordChain = {
   "fighter": "jet"
 };
 
-let currentWord = "apple"; // Starting word
+let currentWord = "apple"; 
+let score = 0;  // Initialize score
 document.getElementById("currentWord").textContent = currentWord;
+document.getElementById("score").textContent = score;
 
 function createInputFields(word) {
   const container = document.getElementById("inputContainer");
-  container.innerHTML = ""; // Clear previous input fields
+  container.innerHTML = "";
 
   for (let i = 0; i < word.length; i++) {
       let input = document.createElement("input");
@@ -20,7 +22,6 @@ function createInputFields(word) {
       input.maxLength = 1;
       input.setAttribute("data-index", i);
 
-      // Auto-focus to next box when typing
       input.addEventListener("input", function () {
           if (this.value.length === 1) {
               let nextInput = this.nextElementSibling;
@@ -28,30 +29,27 @@ function createInputFields(word) {
           }
       });
 
-      // Move focus on backspace
       input.addEventListener("keydown", function (event) {
           if (event.key === "Backspace" && this.value === "") {
               let prevInput = this.previousElementSibling;
               if (prevInput) {
-                  prevInput.value = ""; // Clear previous box
+                  prevInput.value = "";
                   prevInput.focus();
               }
           }
           if (event.key === "Enter") {
-              checkAnswer(); // Press Enter to submit
+              checkAnswer(); 
           }
       });
 
       container.appendChild(input);
   }
 
-  // Focus first box when generating inputs
   if (container.firstChild) {
       container.firstChild.focus();
   }
 }
 
-// Initialize first input fields
 createInputFields(wordChain[currentWord]);
 
 function checkAnswer() {
@@ -60,10 +58,13 @@ function checkAnswer() {
   let feedback = document.getElementById("feedback");
 
   if (wordChain[currentWord] === enteredWord) {
-      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
-      feedback.style.color = "#336799";
+      feedback.textContent = `✅ Correct!`;
+      feedback.style.color = "#ffcc00";
       feedback.classList.add("correct");
       setTimeout(() => feedback.classList.remove("correct"), 500);
+
+      score++;  // Increase score when correct
+      document.getElementById("score").textContent = score;  // Update score display
 
       currentWord = enteredWord; // Set new word
       document.getElementById("currentWord").textContent = currentWord;
@@ -81,15 +82,16 @@ function checkAnswer() {
   }
 }
 
-// Show win screen
 function showWinScreen() {
   document.getElementById("gameContainer").classList.add("hidden");
   document.getElementById("winScreen").classList.remove("hidden");
+  document.getElementById("finalScore").textContent = score; // Show final score
 }
 
-// Restart game
 function restartGame() {
   currentWord = "apple";
+  score = 0;  // Reset score
+  document.getElementById("score").textContent = score;
   document.getElementById("currentWord").textContent = currentWord;
   document.getElementById("gameContainer").classList.remove("hidden");
   document.getElementById("winScreen").classList.add("hidden");

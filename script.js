@@ -14,6 +14,14 @@ document.getElementById("currentWord").textContent = currentWord;
 document.getElementById("score").textContent = score;
 document.getElementById("bestScore").textContent = bestScore; // Display best score
 
+// Start the countdown for the score reduction
+const scoreInterval = setInterval(() => {
+    if (score > 0) {
+        score--; // Decrease score by 1 every second
+        document.getElementById("score").textContent = score; // Update score display
+    }
+}, 1000);
+
 // Create the input fields for the current word
 function createInputFields(word) {
     const container = document.getElementById("inputContainer");
@@ -92,16 +100,8 @@ function checkAnswer() {
     }
 }
 
-// Update score and best score
+// Update best score if necessary
 function updateBestScore() {
-    // Decrease score by 1 per second
-    setTimeout(() => {
-        if (score > 0) {
-            score--;
-            document.getElementById("score").textContent = score;
-        }
-    }, 1000);
-
     // Update best score if necessary
     if (score > bestScore) {
         bestScore = score;
@@ -114,6 +114,9 @@ function updateBestScore() {
 function showWinScreen() {
     document.getElementById("gameContainer").classList.add("hidden");
     document.getElementById("winScreen").classList.remove("hidden");
+
+    // Clear the score interval when the game is won
+    clearInterval(scoreInterval);
 }
 
 // Restart game
@@ -121,9 +124,18 @@ function restartGame() {
     score = 100; // Reset score to initial value
     currentWord = "apple";
     document.getElementById("currentWord").textContent = currentWord;
+    document.getElementById("score").textContent = score;
     document.getElementById("gameContainer").classList.remove("hidden");
     document.getElementById("winScreen").classList.add("hidden");
     document.getElementById("feedback").textContent = "";
-    document.getElementById("score").textContent = score;
     createInputFields(wordChain[currentWord]);
+
+    // Restart the countdown for the score
+    clearInterval(scoreInterval);
+    setInterval(() => {
+        if (score > 0) {
+            score--; // Decrease score by 1 every second
+            document.getElementById("score").textContent = score; // Update score display
+        }
+    }, 1000);
 }

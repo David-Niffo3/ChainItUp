@@ -8,16 +8,14 @@
 </head>
 <body>
 
-    <!-- Score Bar -->
-    <div id="scoreBoard">
-        <h3>Score: <span id="score">0</span></h3>
-    </div>
-
     <!-- Game Section -->
     <div class="container" id="gameContainer">
         <h1>Guess the next word!</h1>
         <p>Starting word: <strong id="currentWord"></strong></p>
         
+        <!-- Score Display -->
+        <p>Score: <span id="score">100</span></p> <!-- Score wordt hier getoond -->
+
         <div id="inputContainer"></div>  <!-- Letter boxes will be generated here -->
         
         <button onclick="checkAnswer()">Check</button>
@@ -27,7 +25,6 @@
     <div class="container hidden" id="winScreen">
         <h1>🎉 You Won! 🎉</h1>
         <p>Congratulations! You completed the word chain.</p>
-        <p>Your final score is: <span id="finalScore"></span></p>
         <button onclick="restartGame()">Play Again</button>
     </div>
 
@@ -41,3 +38,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

@@ -3,7 +3,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #004b87;
     margin: 0;
     padding: 0;
     color: white;
@@ -26,7 +26,7 @@ h1 {
     font-size: 28px;
     font-weight: 600;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #ffcc00;
 }
 
 p {

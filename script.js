@@ -1,100 +1,98 @@
-let currentWord = "apple";  // Starting word
-let userGuess = "";
-let score = 100;
-let timeRemaining = 60;
-let timerInterval;
+const wordChain = {
+  "apple": "tree",
+  "tree": "house",
+  "house": "fire",
+  "fire": "fighter",
+  "fighter": "jet"
+};
 
-// Function to create the input fields for each letter
-function createLetterBoxes() {
-    const inputContainer = document.getElementById('inputContainer');
-    inputContainer.innerHTML = "";
-    for (let i = 0; i < currentWord.length; i++) {
-        const letterBox = document.createElement('input');
-        letterBox.type = "text";
-        letterBox.maxLength = 1;
-        letterBox.classList.add('letter-box');
-        inputContainer.appendChild(letterBox);
-    }
+let currentWord = "apple"; // Starting word
+document.getElementById("currentWord").textContent = currentWord;
+
+function createInputFields(word) {
+  const container = document.getElementById("inputContainer");
+  container.innerHTML = ""; // Clear previous input fields
+
+  for (let i = 0; i < word.length; i++) {
+      let input = document.createElement("input");
+      input.type = "text";
+      input.classList.add("letter-box");
+      input.maxLength = 1;
+      input.setAttribute("data-index", i);
+
+      // Auto-focus to next box when typing
+      input.addEventListener("input", function () {
+          if (this.value.length === 1) {
+              let nextInput = this.nextElementSibling;
+              if (nextInput) nextInput.focus();
+          }
+      });
+
+      // Move focus on backspace
+      input.addEventListener("keydown", function (event) {
+          if (event.key === "Backspace" && this.value === "") {
+              let prevInput = this.previousElementSibling;
+              if (prevInput) {
+                  prevInput.value = ""; // Clear previous box
+                  prevInput.focus();
+              }
+          }
+          if (event.key === "Enter") {
+              checkAnswer(); // Press Enter to submit
+          }
+      });
+
+      container.appendChild(input);
+  }
+
+  // Focus first box when generating inputs
+  if (container.firstChild) {
+      container.firstChild.focus();
+  }
 }
 
-// Function to check the user's guess
+// Initialize first input fields
+createInputFields(wordChain[currentWord]);
+
 function checkAnswer() {
-    const userGuess = getUserGuess();
-    if (userGuess === currentWord) {
-        score += 30;  // Add points for correct guess
-        document.getElementById('feedback').textContent = "Correct! You earned 30 points.";
-        startNextWord();
-    } else {
-        document.getElementById('feedback').textContent = "Incorrect! Try again.";
-    }
-    updateScore();
+  let inputLetters = document.querySelectorAll(".letter-box");
+  let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
+  let feedback = document.getElementById("feedback");
+
+  if (wordChain[currentWord] === enteredWord) {
+      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
+      feedback.style.color = "#ffcc00";
+      feedback.classList.add("correct");
+      setTimeout(() => feedback.classList.remove("correct"), 500);
+
+      currentWord = enteredWord; // Set new word
+      document.getElementById("currentWord").textContent = currentWord;
+
+      if (!wordChain[currentWord]) {
+          showWinScreen();
+      } else {
+          createInputFields(wordChain[currentWord]);
+      }
+  } else {
+      feedback.textContent = "❌ Incorrect! Try again.";
+      feedback.style.color = "red";
+      feedback.classList.add("wrong");
+      setTimeout(() => feedback.classList.remove("wrong"), 300);
+  }
 }
 
-// Function to get the user's guess
-function getUserGuess() {
-    let guess = "";
-    const inputs = document.querySelectorAll('.letter-box');
-    inputs.forEach(input => {
-        guess += input.value.toLowerCase();
-    });
-    return guess;
+// Show win screen
+function showWinScreen() {
+  document.getElementById("gameContainer").classList.add("hidden");
+  document.getElementById("winScreen").classList.remove("hidden");
 }
 
-// Function to update the score on the screen
-function updateScore() {
-    document.getElementById('score').textContent = score;
-    if (score <= 0) {
-        endGame(false);  // End the game if score is 0
-    }
-}
-
-// Function to start the next word
-function startNextWord() {
-    currentWord = getNextWord();  // Get the next word
-    createLetterBoxes();  // Create new input fields
-    document.getElementById('feedback').textContent = "";
-}
-
-// Function to get a random next word (you can customize this logic)
-function getNextWord() {
-    const words = ["tree", "banana", "house", "car", "mountain"];
-    return words[Math.floor(Math.random() * words.length)];
-}
-
-// Function to start the timer
-function startTimer() {
-    timerInterval = setInterval(() => {
-        timeRemaining--;
-        document.getElementById('timeRemaining').textContent = timeRemaining;
-        if (timeRemaining <= 0) {
-            endGame(false);
-        }
-    }, 1000);
-}
-
-// Function to handle the end of the game
-function endGame(won) {
-    clearInterval(timerInterval);
-    if (won) {
-        document.getElementById('winScreen').classList.remove('hidden');
-    } else {
-        document.getElementById('loseScreen').classList.remove('hidden');
-    }
-    document.getElementById('gameContainer').classList.add('hidden');
-}
-
-// Function to restart the game
+// Restart game
 function restartGame() {
-    score = 100;
-    timeRemaining = 60;
-    document.getElementById('score').textContent = score;
-    document.getElementById('timeRemaining').textContent = timeRemaining;
-    document.getElementById('gameContainer').classList.remove('hidden');
-    document.getElementById('winScreen').classList.add('hidden');
-    document.getElementById('loseScreen').classList.add('hidden');
-    startTimer();
-    startNextWord();
+  currentWord = "apple";
+  document.getElementById("currentWord").textContent = currentWord;
+  document.getElementById("gameContainer").classList.remove("hidden");
+  document.getElementById("winScreen").classList.add("hidden");
+  document.getElementById("feedback").textContent = "";
+  createInputFields(wordChain[currentWord]);
 }
-
-// Initialize the game
-restartGame();

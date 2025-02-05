@@ -15,7 +15,7 @@ document.getElementById("currentWord").textContent = currentWord; // Toon het st
 function decreaseScore() {
   setInterval(function () {
     if (score > 0) {
-      score-1;
+      score--;
       document.getElementById("score").textContent = score; // Update de score op de pagina
     }
   }, 1000); // Aftrekken elke seconde

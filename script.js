@@ -102,7 +102,6 @@ function checkAnswer() {
 
 // Update best score if necessary
 function updateBestScore() {
-    // Update best score if necessary
     if (score > bestScore) {
         bestScore = score;
         localStorage.setItem("bestScore", bestScore); // Save best score to localStorage

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="gameContainer">
         <h1>Guess the next word!</h1>
         <p>Starting word: <strong id="currentWord"></strong></p>
         
@@ -16,6 +16,12 @@
         
         <button onclick="checkAnswer()">Check</button>
         <p id="feedback"></p>
+    </div>
+
+    <div class="container hidden" id="winScreen">
+        <h1>🎉 You Won! 🎉</h1>
+        <p>Congratulations! You completed the word chain.</p>
+        <button onclick="restartGame()">Play Again</button>
     </div>
 
     <script src="script.js"></script>

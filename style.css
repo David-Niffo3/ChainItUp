@@ -3,7 +3,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    background-color: #9ACEFF; /* Lichte blauwe achtergrond voor de pagina */
+    background-color: #C7DDF5; /* Lichte achtergrondkleur */
     margin: 0;
     padding: 0;
     color: #336799; /* Donkerblauwe tekstkleur */
@@ -14,7 +14,7 @@ body {
 
 .container {
     margin-top: 20px;
-    background: #C7DDF5; /* Lichte achtergrondkleur voor het spelgedeelte */
+    background: #9ACEFF; /* Lichte blauwe achtergrond voor het spelgedeelte */
     padding: 20px;
     width: 80%;
     max-width: 400px;
@@ -67,7 +67,7 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
-    background-color: #C7DDF5; /* Lichte achtergrondkleur voor de knop */
+    background-color: #9ACEFF; /* Lichte blauwe achtergrondkleur voor de knop */
     color: #336799; /* Donkerblauwe tekstkleur voor de knop */
     font-weight: bold;
     cursor: pointer;
@@ -85,24 +85,33 @@ button:hover {
     color: #336799; /* Donkerblauwe tekstkleur voor feedback */
 }
 
-/* Score and Timer Section */
-#scoreContainer {
-    margin-top: 20px;
+/* Animation for correct answers */
+.correct {
+    animation: correctAnim 0.5s ease-in-out;
 }
 
-#scoreContainer p {
-    font-size: 20px;
-    font-weight: bold;
+@keyframes correctAnim {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
-#scoreContainer p strong {
-    font-size: 24px;
-    color: #FF0000; /* Red color for the score */
+/* Animation for incorrect answers */
+.wrong {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }
 
 /* Info board styling */
 .info-board {
-    background: #C7DDF5; /* Lichte achtergrondkleur voor de informatiebox */
+    background: #9ACEFF; /* Lichte blauwe achtergrond voor de informatiebox */
     color: #336799; /* Donkerblauwe tekstkleur */
     padding: 15px;
     margin: 20px auto;

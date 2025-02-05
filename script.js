@@ -27,8 +27,8 @@ let currentChain = {};
 let difficultyLevel = "";
 
 document.getElementById("playButton").addEventListener("click", function() {
-  document.getElementById("startScreen").classList.add("hidden");
-  document.getElementById("difficultyScreen").classList.remove("hidden");
+  document.getElementById("startScreen").style.display = "none";  // Verberg de startscherm
+  document.getElementById("difficultyScreen").style.display = "flex";  // Laat het keuzescherm zien
 });
 
 function startGame(difficulty) {
@@ -37,8 +37,8 @@ function startGame(difficulty) {
   currentWord = Object.keys(currentChain)[0];
   document.getElementById("currentWord").textContent = currentWord;
 
-  document.getElementById("difficultyScreen").classList.add("hidden");
-  document.getElementById("gameContainer").classList.remove("hidden");
+  document.getElementById("difficultyScreen").style.display = "none";  // Verberg de moeilijkheidsscherm
+  document.getElementById("gameContainer").style.display = "flex";  // Laat het spel zien
 
   createInputFields(currentChain[currentWord]);
 }
@@ -106,11 +106,11 @@ function checkAnswer() {
 }
 
 function showWinScreen() {
-  document.getElementById("gameContainer").classList.add("hidden");
-  document.getElementById("winScreen").classList.remove("hidden");
+  document.getElementById("gameContainer").style.display = "none";  // Verberg het spel
+  document.getElementById("winScreen").style.display = "flex";  // Laat de winstscherm zien
 }
 
 function restartGame() {
-  document.getElementById("winScreen").classList.add("hidden");
-  document.getElementById("startScreen").classList.remove("hidden");
+  document.getElementById("winScreen").style.display = "none";  // Verberg de winstscherm
+  document.getElementById("startScreen").style.display = "flex";  // Laat de startscherm zien
 }

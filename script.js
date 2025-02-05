@@ -1,98 +1,135 @@
-const wordChain = {
-  "apple": "tree",
-  "tree": "house",
-  "house": "fire",
-  "fire": "fighter",
-  "fighter": "jet"
-};
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-let currentWord = "apple"; // Starting word
-document.getElementById("currentWord").textContent = currentWord;
-
-function createInputFields(word) {
-  const container = document.getElementById("inputContainer");
-  container.innerHTML = ""; // Clear previous input fields
-
-  for (let i = 0; i < word.length; i++) {
-      let input = document.createElement("input");
-      input.type = "text";
-      input.classList.add("letter-box");
-      input.maxLength = 1;
-      input.setAttribute("data-index", i);
-
-      // Auto-focus to next box when typing
-      input.addEventListener("input", function () {
-          if (this.value.length === 1) {
-              let nextInput = this.nextElementSibling;
-              if (nextInput) nextInput.focus();
-          }
-      });
-
-      // Move focus on backspace
-      input.addEventListener("keydown", function (event) {
-          if (event.key === "Backspace" && this.value === "") {
-              let prevInput = this.previousElementSibling;
-              if (prevInput) {
-                  prevInput.value = ""; // Clear previous box
-                  prevInput.focus();
-              }
-          }
-          if (event.key === "Enter") {
-              checkAnswer(); // Press Enter to submit
-          }
-      });
-
-      container.appendChild(input);
-  }
-
-  // Focus first box when generating inputs
-  if (container.firstChild) {
-      container.firstChild.focus();
-  }
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-color: #9ACEFF; /* Lichte blauwe achtergrond voor de pagina */
+    margin: 0;
+    padding: 0;
+    color: #336799; /* Donkerblauwe tekstkleur */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-// Initialize first input fields
-createInputFields(wordChain[currentWord]);
-
-function checkAnswer() {
-  let inputLetters = document.querySelectorAll(".letter-box");
-  let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
-  let feedback = document.getElementById("feedback");
-
-  if (wordChain[currentWord] === enteredWord) {
-      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
-      feedback.style.color = "#ffcc00";
-      feedback.classList.add("correct");
-      setTimeout(() => feedback.classList.remove("correct"), 500);
-
-      currentWord = enteredWord; // Set new word
-      document.getElementById("currentWord").textContent = currentWord;
-
-      if (!wordChain[currentWord]) {
-          showWinScreen();
-      } else {
-          createInputFields(wordChain[currentWord]);
-      }
-  } else {
-      feedback.textContent = "❌ Incorrect! Try again.";
-      feedback.style.color = "red";
-      feedback.classList.add("wrong");
-      setTimeout(() => feedback.classList.remove("wrong"), 300);
-  }
+.container {
+    margin-top: 20px;
+    background: #C7DDF5; /* Lichte achtergrondkleur voor het spelgedeelte */
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    text-align: center;
+    flex-grow: 1;
 }
 
-// Show win screen
-function showWinScreen() {
-  document.getElementById("gameContainer").classList.add("hidden");
-  document.getElementById("winScreen").classList.remove("hidden");
+.hidden {
+    display: none;
 }
 
-// Restart game
-function restartGame() {
-  currentWord = "apple";
-  document.getElementById("currentWord").textContent = currentWord;
-  document.getElementById("gameContainer").classList.remove("hidden");
-  document.getElementById("winScreen").classList.add("hidden");
-  document.getElementById("feedback").textContent = "";
-  createInputFields(wordChain[currentWord]);
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #336799; /* Donkerblauwe tekstkleur */
+}
+
+p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+#inputContainer {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.letter-box {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #336799; /* Donkerblauwe randkleur */
+    background-color: #669ACC; /* Blauwe lettervakjes */
+    color: #336799; /* Donkerblauwe tekstkleur */
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #C7DDF5; /* Lichte achtergrondkleur voor de knop */
+    color: #336799; /* Donkerblauwe tekstkleur voor de knop */
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #669ACC; /* Donkerdere blauwe knop bij hover */
+}
+
+#feedback {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #336799; /* Donkerblauwe tekstkleur voor feedback */
+}
+
+/* Animation for correct answers */
+.correct {
+    animation: correctAnim 0.5s ease-in-out;
+}
+
+@keyframes correctAnim {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Animation for incorrect answers */
+.wrong {
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Info board styling */
+.info-board {
+    background: #C7DDF5; /* Lichte achtergrondkleur voor de informatiebox */
+    color: #336799; /* Donkerblauwe tekstkleur */
+    padding: 15px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    position: relative;
+    bottom: 0;
+}
+
+.info-board h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.info-board p {
+    font-size: 16px;
+    line-height: 1.5;
 }

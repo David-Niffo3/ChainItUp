@@ -35,11 +35,13 @@ function createInputFields(word) {
     input.maxLength = 1;
     input.setAttribute("data-index", i);
 
-    // Automatisch naar volgende box springen
+    // Automatisch naar volgende box springen als de speler zelf typt
     input.addEventListener("input", function () {
       if (this.value.length === 1) {
         let nextInput = this.nextElementSibling;
-        if (nextInput) nextInput.focus();
+        if (nextInput && !nextInput.readOnly) {
+          nextInput.focus();
+        }
       }
     });
 
@@ -47,7 +49,7 @@ function createInputFields(word) {
     input.addEventListener("keydown", function (event) {
       if (event.key === "Backspace" && this.value === "") {
         let prevInput = this.previousElementSibling;
-        if (prevInput) {
+        if (prevInput && !prevInput.readOnly) {
           prevInput.value = "";
           prevInput.focus();
         }
@@ -87,6 +89,8 @@ function giveHint(word) {
   if (emptyIndices.length > 0) {
     let randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
     inputLetters[randomIndex].value = correctWord[randomIndex];
+    inputLetters[randomIndex].readOnly = true; // Zet het veld op alleen-lezen zodat het niet verspringt
+    inputLetters[randomIndex].classList.add("hinted-letter");
   }
 }
 

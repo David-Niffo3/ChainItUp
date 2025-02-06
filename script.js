@@ -1,4 +1,3 @@
-
 const wordChain = {
   "apple": "tree",
   "tree": "house",
@@ -7,122 +6,136 @@ const wordChain = {
   "fighter": "jet"
 };
 
-let currentWord = "apple"; // Starting word
-let score = 100; // Initial score
-let bestScore = localStorage.getItem("bestScore") || 0; // Get best score from localStorage (or 0 if none)
+let currentWord = "apple"; // Startwoord
+let score = 100; // Startscore
+let bestScore = localStorage.getItem("bestScore") || 0; // Best score opslaan in localStorage
+let hintTimer; // Timer voor hints
 
 document.getElementById("currentWord").textContent = currentWord;
 document.getElementById("score").textContent = score;
-document.getElementById("bestScore").textContent = bestScore; // Display best score
+document.getElementById("bestScore").textContent = bestScore;
 
-// Start the countdown for the score reduction
+// Start de countdown om punten te verminderen
 const scoreInterval = setInterval(() => {
   if (score > 0) {
-      score--; // Decrease score by 1 every second
-      document.getElementById("score").textContent = score; // Update score display
+    score--;
+    document.getElementById("score").textContent = score;
   }
 }, 1000);
 
-// Create the input fields for the current word
+// Maak invoervelden aan voor het huidige woord
 function createInputFields(word) {
   const container = document.getElementById("inputContainer");
-  container.innerHTML = ""; // Clear previous input fields
+  container.innerHTML = ""; // Oude invoervelden verwijderen
 
   for (let i = 0; i < word.length; i++) {
-      let input = document.createElement("input");
-      input.type = "text";
-      input.classList.add("letter-box");
-      input.maxLength = 1;
-      input.setAttribute("data-index", i);
+    let input = document.createElement("input");
+    input.type = "text";
+    input.classList.add("letter-box");
+    input.maxLength = 1;
+    input.setAttribute("data-index", i);
 
-      // Auto-focus to next box when typing
-      input.addEventListener("input", function () {
-          if (this.value.length === 1) {
-              let nextInput = this.nextElementSibling;
-              if (nextInput) nextInput.focus();
-          }
-      });
+    // Focus automatisch naar de volgende letter
+    input.addEventListener("input", function () {
+      if (this.value.length === 1) {
+        let nextInput = this.nextElementSibling;
+        if (nextInput) nextInput.focus();
+      }
+    });
 
-      // Move focus on backspace
-      input.addEventListener("keydown", function (event) {
-          if (event.key === "Backspace" && this.value === "") {
-              let prevInput = this.previousElementSibling;
-              if (prevInput) {
-                  prevInput.value = ""; // Clear previous box
-                  prevInput.focus();
-              }
-          }
-          if (event.key === "Enter") {
-              checkAnswer(); // Press Enter to submit
-          }
-      });
+    // Backspace functionaliteit
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Backspace" && this.value === "") {
+        let prevInput = this.previousElementSibling;
+        if (prevInput) {
+          prevInput.value = "";
+          prevInput.focus();
+        }
+      }
+      if (event.key === "Enter") {
+        checkAnswer();
+      }
+    });
 
-      container.appendChild(input);
+    container.appendChild(input);
   }
 
-  // Focus first box when generating inputs
+  // Zet de focus op het eerste invoerveld
   if (container.firstChild) {
-      container.firstChild.focus();
+    container.firstChild.focus();
+  }
+
+  // Start hint-timer van 30 seconden
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(() => giveHint(word), 30000);
+}
+
+// Geef een letter cadeau als de speler het woord niet binnen 30 seconden raadt
+function giveHint(word) {
+  let inputLetters = document.querySelectorAll(".letter-box");
+  let correctWord = wordChain[currentWord];
+
+  for (let i = 0; i < correctWord.length; i++) {
+    if (inputLetters[i].value === "") {
+      inputLetters[i].value = correctWord[i]; // Vul eerste lege vakje in
+      break;
+    }
   }
 }
 
-// Initialize the first input fields
-createInputFields(wordChain[currentWord]);
-
-// Check the entered answer
+// Check het ingevoerde antwoord
 function checkAnswer() {
   let inputLetters = document.querySelectorAll(".letter-box");
   let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
   let feedback = document.getElementById("feedback");
 
   if (wordChain[currentWord] === enteredWord) {
-      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
-      feedback.style.color = "#";336799
-      feedback.classList.add("correct");
-      setTimeout(() => feedback.classList.remove("correct"), 500);
+    feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
+    feedback.style.color = "#336799";
+    feedback.classList.add("correct");
+    setTimeout(() => feedback.classList.remove("correct"), 500);
 
-      currentWord = enteredWord; // Set new word
-      document.getElementById("currentWord").textContent = currentWord;
+    currentWord = enteredWord;
+    document.getElementById("currentWord").textContent = currentWord;
 
-      if (!wordChain[currentWord]) {
-          showWinScreen();
-      } else {
-          createInputFields(wordChain[currentWord]);
-      }
+    if (!wordChain[currentWord]) {
+      showWinScreen();
+    } else {
+      createInputFields(wordChain[currentWord]);
+    }
 
-      // Add points and update score
-      score += 30;
-      updateBestScore();
+    // Voeg punten toe en update score
+    score += 30;
+    updateBestScore();
   } else {
-      feedback.textContent = "❌ Incorrect! Try again.";
-      feedback.style.color = "red";
-      feedback.classList.add("wrong");
-      setTimeout(() => feedback.classList.remove("wrong"), 300);
+    feedback.textContent = "❌ Incorrect! Try again.";
+    feedback.style.color = "red";
+    feedback.classList.add("wrong");
+    setTimeout(() => feedback.classList.remove("wrong"), 300);
   }
 }
 
-// Update best score if necessary
+// Update de beste score als nodig
 function updateBestScore() {
-  // Update best score if necessary
   if (score > bestScore) {
-      bestScore = score;
-      localStorage.setItem("bestScore", bestScore); // Save best score to localStorage
-      document.getElementById("bestScore").textContent = bestScore; // Display best score
+    bestScore = score;
+    localStorage.setItem("bestScore", bestScore); // Sla de beste score op in localStorage
+    document.getElementById("bestScore").textContent = bestScore;
   }
 }
 
-// Show win screen
+// Laat het win-scherm zien
 function showWinScreen() {
   document.getElementById("gameContainer").classList.add("hidden");
   document.getElementById("winScreen").classList.remove("hidden");
 
-  // Clear the score interval when the game is won
+  // Stop het score-aftellen als de speler wint
   clearInterval(scoreInterval);
 }
 
-// Restart game
+// Start het spel opnieuw
 function restartGame() {
-  score = 100; // Reset score to initial value
+  score = 100;
   currentWord = "apple";
   document.getElementById("currentWord").textContent = currentWord;
   document.getElementById("score").textContent = score;
@@ -131,12 +144,16 @@ function restartGame() {
   document.getElementById("feedback").textContent = "";
   createInputFields(wordChain[currentWord]);
 
-  // Restart the countdown for the score
+  // Start de score countdown opnieuw
   clearInterval(scoreInterval);
   setInterval(() => {
-      if (score > 0) {
-          score--; // Decrease score by 1 every second
-          document.getElementById("score").textContent = score; // Update score display
-      }
+    if (score > 0) {
+      score--;
+      document.getElementById("score").textContent = score;
+    }
   }, 1000);
 }
+
+// Start het eerste woord
+createInputFields(wordChain[currentWord]);
+

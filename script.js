@@ -31,16 +31,15 @@ const wordChain = {
   "paint": "color"
 };
 
-let currentWord = "apple"; // Startwoord
-let score = 100; // Startscore
-let bestScore = localStorage.getItem("bestScore") || 0; // Beste score opslaan in localStorage
-let hintTimer; // Timer voor hints
+let currentWord = "apple";
+let score = 100;
+let bestScore = localStorage.getItem("bestScore") || 0;
+let hintTimer;
 
 document.getElementById("currentWord").textContent = currentWord;
 document.getElementById("score").textContent = score;
 document.getElementById("bestScore").textContent = bestScore;
 
-// Start countdown voor score
 const scoreInterval = setInterval(() => {
   if (score > 0) {
     score--;
@@ -48,10 +47,9 @@ const scoreInterval = setInterval(() => {
   }
 }, 1000);
 
-// Maak invoervelden aan voor het huidige woord
 function createInputFields(word) {
   const container = document.getElementById("inputContainer");
-  container.innerHTML = ""; // Oude invoervelden verwijderen
+  container.innerHTML = "";
 
   for (let i = 0; i < word.length; i++) {
     let input = document.createElement("input");
@@ -60,19 +58,17 @@ function createInputFields(word) {
     input.maxLength = 1;
     input.setAttribute("data-index", i);
 
-    // Focus automatisch naar de volgende letter
     input.addEventListener("input", function () {
       if (this.value.length === 1) {
         let nextInput = this.nextElementSibling;
-        if (nextInput) nextInput.focus();
+        if (nextInput && !nextInput.disabled) nextInput.focus();
       }
     });
 
-    // Backspace functionaliteit
     input.addEventListener("keydown", function (event) {
       if (event.key === "Backspace" && this.value === "") {
         let prevInput = this.previousElementSibling;
-        if (prevInput) {
+        if (prevInput && !prevInput.disabled) {
           prevInput.value = "";
           prevInput.focus();
         }
@@ -85,30 +81,28 @@ function createInputFields(word) {
     container.appendChild(input);
   }
 
-  // Zet de focus op het eerste invoerveld
   if (container.firstChild) {
     container.firstChild.focus();
   }
 
-  // Start hint-timer van 30 seconden
   clearTimeout(hintTimer);
   hintTimer = setTimeout(() => giveHint(word), 30000);
 }
 
-// Geef een letter cadeau als de speler het woord niet binnen 30 seconden raadt
 function giveHint(word) {
   let inputLetters = document.querySelectorAll(".letter-box");
   let correctWord = wordChain[currentWord];
 
   for (let i = 0; i < correctWord.length; i++) {
     if (inputLetters[i].value === "") {
-      inputLetters[i].value = correctWord[i]; // Vul eerste lege vakje in
+      inputLetters[i].value = correctWord[i];
+      inputLetters[i].disabled = true; // Vergrendelt de hintletter
+      inputLetters[i].classList.add("hint-letter"); // Optioneel: visuele stijl toevoegen
       break;
     }
   }
 }
 
-// Check het ingevoerde antwoord
 function checkAnswer() {
   let inputLetters = document.querySelectorAll(".letter-box");
   let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
@@ -129,7 +123,6 @@ function checkAnswer() {
       createInputFields(wordChain[currentWord]);
     }
 
-    // Voeg punten toe en update score
     score += 30;
     updateBestScore();
   } else {
@@ -140,25 +133,20 @@ function checkAnswer() {
   }
 }
 
-// Update de beste score als nodig
 function updateBestScore() {
   if (score > bestScore) {
     bestScore = score;
-    localStorage.setItem("bestScore", bestScore); // Sla de beste score op in localStorage
+    localStorage.setItem("bestScore", bestScore);
     document.getElementById("bestScore").textContent = bestScore;
   }
 }
 
-// Laat het win-scherm zien
 function showWinScreen() {
   document.getElementById("gameContainer").classList.add("hidden");
   document.getElementById("winScreen").classList.remove("hidden");
-
-  // Stop het score-aftellen als de speler wint
   clearInterval(scoreInterval);
 }
 
-// Start het spel opnieuw
 function restartGame() {
   score = 100;
   currentWord = "apple";
@@ -169,7 +157,6 @@ function restartGame() {
   document.getElementById("feedback").textContent = "";
   createInputFields(wordChain[currentWord]);
 
-  // Start de score countdown opnieuw
   clearInterval(scoreInterval);
   setInterval(() => {
     if (score > 0) {
@@ -179,5 +166,4 @@ function restartGame() {
   }, 1000);
 }
 
-// Start het eerste woord
 createInputFields(wordChain[currentWord]);

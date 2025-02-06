@@ -3,19 +3,44 @@ const wordChain = {
   "tree": "house",
   "house": "fire",
   "fire": "fighter",
-  "fighter": "jet"
+  "fighter": "jet",
+  "jet": "engine",
+  "engine": "speed",
+  "speed": "limit",
+  "limit": "break",
+  "break": "dance",
+  "dance": "floor",
+  "floor": "lamp",
+  "lamp": "light",
+  "light": "bulb",
+  "bulb": "plant",
+  "plant": "growth",
+  "growth": "mind",
+  "mind": "game",
+  "game": "level",
+  "level": "boss",
+  "boss": "fight",
+  "fight": "arena",
+  "arena": "crowd",
+  "crowd": "cheer",
+  "cheer": "happy",
+  "happy": "smile",
+  "smile": "teeth",
+  "teeth": "brush",
+  "brush": "paint",
+  "paint": "color"
 };
 
 let currentWord = "apple"; // Startwoord
 let score = 100; // Startscore
-let bestScore = localStorage.getItem("bestScore") || 0; // Best score opslaan in localStorage
+let bestScore = localStorage.getItem("bestScore") || 0; // Beste score opslaan in localStorage
 let hintTimer; // Timer voor hints
 
 document.getElementById("currentWord").textContent = currentWord;
 document.getElementById("score").textContent = score;
 document.getElementById("bestScore").textContent = bestScore;
 
-// Start de countdown om punten te verminderen
+// Start countdown voor score
 const scoreInterval = setInterval(() => {
   if (score > 0) {
     score--;

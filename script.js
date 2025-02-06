@@ -8,14 +8,14 @@ const wordChain = {
 
 let currentWord = "apple"; // Startwoord
 let score = 100; // Startscore
-let bestScore = localStorage.getItem("bestScore") || 0; // Beste score uit localStorage
+let bestScore = localStorage.getItem("bestScore") || 0; // Best score opslaan in localStorage
 let hintTimer; // Timer voor hints
 
 document.getElementById("currentWord").textContent = currentWord;
 document.getElementById("score").textContent = score;
 document.getElementById("bestScore").textContent = bestScore;
 
-// Start score countdown
+// Start de countdown om punten te verminderen
 const scoreInterval = setInterval(() => {
   if (score > 0) {
     score--;
@@ -26,7 +26,7 @@ const scoreInterval = setInterval(() => {
 // Maak invoervelden aan voor het huidige woord
 function createInputFields(word) {
   const container = document.getElementById("inputContainer");
-  container.innerHTML = ""; // Verwijder oude invoervelden
+  container.innerHTML = ""; // Oude invoervelden verwijderen
 
   for (let i = 0; i < word.length; i++) {
     let input = document.createElement("input");
@@ -35,7 +35,7 @@ function createInputFields(word) {
     input.maxLength = 1;
     input.setAttribute("data-index", i);
 
-    // Automatisch naar volgende box springen
+    // Focus automatisch naar de volgende letter
     input.addEventListener("input", function () {
       if (this.value.length === 1) {
         let nextInput = this.nextElementSibling;
@@ -70,23 +70,16 @@ function createInputFields(word) {
   hintTimer = setTimeout(() => giveHint(word), 30000);
 }
 
-// Geef een willekeurige letter cadeau als de speler het woord niet binnen 30 seconden raadt
+// Geef een letter cadeau als de speler het woord niet binnen 30 seconden raadt
 function giveHint(word) {
   let inputLetters = document.querySelectorAll(".letter-box");
   let correctWord = wordChain[currentWord];
 
-  // Maak een lijst van lege velden
-  let emptyIndices = [];
   for (let i = 0; i < correctWord.length; i++) {
     if (inputLetters[i].value === "") {
-      emptyIndices.push(i);
+      inputLetters[i].value = correctWord[i]; // Vul eerste lege vakje in
+      break;
     }
-  }
-
-  // Kies willekeurig een lege positie en vul de juiste letter in
-  if (emptyIndices.length > 0) {
-    let randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-    inputLetters[randomIndex].value = correctWord[randomIndex];
   }
 }
 
@@ -126,7 +119,7 @@ function checkAnswer() {
 function updateBestScore() {
   if (score > bestScore) {
     bestScore = score;
-    localStorage.setItem("bestScore", bestScore);
+    localStorage.setItem("bestScore", bestScore); // Sla de beste score op in localStorage
     document.getElementById("bestScore").textContent = bestScore;
   }
 }
@@ -135,6 +128,8 @@ function updateBestScore() {
 function showWinScreen() {
   document.getElementById("gameContainer").classList.add("hidden");
   document.getElementById("winScreen").classList.remove("hidden");
+
+  // Stop het score-aftellen als de speler wint
   clearInterval(scoreInterval);
 }
 

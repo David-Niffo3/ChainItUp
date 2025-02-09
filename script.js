@@ -227,3 +227,10 @@ function playWrongSound() {
     wrongSound.play();
 }
 
+function showWinScreen() {
+  document.getElementById("gameContainer").classList.add("hidden");
+  document.getElementById("winScreen").classList.remove("hidden");
+
+  // Stop de achtergrondmuziek wanneer het spel is gewonnen
+  stopBackgroundMusic();
+}

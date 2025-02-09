@@ -169,10 +169,37 @@ function restartGame() {
 createInputFields(wordChain[currentWord]);
 
 // Thema wisselen en opslaan in localStorage
-function changeTheme() {
-    let selectedTheme = document.getElementById("theme").value;
-    document.body.className = selectedTheme + "-theme"; // Thema toepassen
-    localStorage.setItem("selectedTheme", selectedTheme); // Opslaan
+// Aanpassing van de functie om de achtergrond van info-board aan te passen
+function changeTheme(theme) {
+    const gameContainer = document.getElementById('gameContainer');
+    const inputContainer = document.getElementById('inputContainer');
+    const button = document.querySelector('button');
+    const infoBoard = document.querySelector('.info-board'); // Het info-board element
+
+    // Verwijder alle thema-klassen eerst
+    gameContainer.classList.remove('theme-light', 'theme-dark');
+    inputContainer.classList.remove('theme-light', 'theme-dark');
+    button.classList.remove('theme-light', 'theme-dark');
+    infoBoard.classList.remove('theme-light', 'theme-dark');
+
+    // Pas het nieuwe thema toe
+    if (theme === 'light') {
+        gameContainer.classList.add('theme-light');
+        inputContainer.classList.add('theme-light');
+        button.classList.add('theme-light');
+        infoBoard.classList.add('theme-light');
+        // Verander de achtergrondkleur van de info-board voor light thema
+        infoBoard.style.backgroundColor = '#e0f7fa'; // Lichtblauw voor light thema
+    } else if (theme === 'dark') {
+        gameContainer.classList.add('theme-dark');
+        inputContainer.classList.add('theme-dark');
+        button.classList.add('theme-dark');
+        infoBoard.classList.add('theme-dark');
+        // Verander de achtergrondkleur van de info-board voor dark thema
+        infoBoard.style.backgroundColor = '#263238'; // Donkergrijs voor dark thema
+    }
+}
+
 }
 
 // Thema laden bij start

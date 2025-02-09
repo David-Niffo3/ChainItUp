@@ -188,3 +188,31 @@ window.onload = function() {
     document.getElementById("theme").value = savedTheme;
     document.body.className = savedTheme + "-theme";
 };
+
+// Achtergrondmuziek
+const backgroundMusic = document.getElementById("backgroundMusic");
+
+// Geluidseffecten voor goede en foute antwoorden
+const correctSound = new Audio('correct-sound.mp3');
+const wrongSound = new Audio('wrong-sound.mp3');
+
+// Zet de achtergrondmuziek op 'auto-play' wanneer het spel begint
+function startBackgroundMusic() {
+    backgroundMusic.play();
+}
+
+// Stop de achtergrondmuziek wanneer het spel eindigt
+function stopBackgroundMusic() {
+    backgroundMusic.pause();
+}
+
+// Functie om correct antwoord geluid af te spelen
+function playCorrectSound() {
+    correctSound.play();
+}
+
+// Functie om fout antwoord geluid af te spelen
+function playWrongSound() {
+    wrongSound.play();
+}
+

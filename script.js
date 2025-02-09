@@ -167,3 +167,17 @@ function restartGame() {
 }
 
 createInputFields(wordChain[currentWord]);
+
+// Thema wisselen en opslaan in localStorage
+function changeTheme() {
+    let selectedTheme = document.getElementById("theme").value;
+    document.body.className = selectedTheme + "-theme"; // Thema toepassen
+    localStorage.setItem("selectedTheme", selectedTheme); // Opslaan
+}
+
+// Thema laden bij start
+window.onload = function() {
+    let savedTheme = localStorage.getItem("selectedTheme") || "light";
+    document.getElementById("theme").value = savedTheme;
+    document.body.className = savedTheme + "-theme";
+};

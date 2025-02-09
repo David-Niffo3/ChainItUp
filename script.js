@@ -234,3 +234,19 @@ function showWinScreen() {
   // Stop de achtergrondmuziek wanneer het spel is gewonnen
   stopBackgroundMusic();
 }
+
+let isSoundOn = true;
+
+function toggleSound() {
+  if (isSoundOn) {
+    backgroundMusic.pause();
+    isSoundOn = false;
+  } else {
+    backgroundMusic.play();
+    isSoundOn = true;
+  }
+}
+
+// Voeg de onderstaande HTML knop toe:
+<button onclick="toggleSound()">Toggle Sound</button>
+

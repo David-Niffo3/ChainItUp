@@ -166,6 +166,8 @@ function restartGame() {
   document.getElementById("feedback").textContent = "";
   createInputFields(wordChain[currentWord]);
 
+  startBackgroundMusic();
+  
   clearInterval(scoreInterval);
   setInterval(() => {
     if (score > 0) {

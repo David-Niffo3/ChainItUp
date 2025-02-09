@@ -163,50 +163,39 @@ button:hover {
     border: 1px solid #336799;
 }
 
-/* Light Theme */
-.theme-light {
-    background-color: #ffffff;
-    color: #000000;
+/* Thema selector */
+.theme-selector {
+    margin: 10px;
+    text-align: center;
 }
 
-.theme-light .letter-box {
-    background-color: #ffffff;
-    color: #000000;
-    border: 2px solid #336799;
+.theme-selector select {
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #336799;
 }
 
-.theme-light button {
-    background-color: #9ACEFF;
+/* Licht thema (standaard) */
+body.light-theme {
+    background-color: #C7DDF5;
     color: #336799;
 }
 
-/* Dark Theme */
-.theme-dark {
-    background-color: #263238;
-    color: #ffffff;
+body.light-theme .container {
+    background: #9ACEFF;
 }
 
-.theme-dark .letter-box {
-    background-color: #37474f;
-    color: #ffffff;
-    border: 2px solid #90a4ae;
+/* Donker thema */
+body.dark-theme {
+    background-color: #1A1A2E;
+    color: #EAEAEA;
 }
 
-.theme-dark button {
-    background-color: #4caf50;
-    color: #ffffff;
+body.dark-theme .container {
+    background: #16213E;
+    color: #EAEAEA;
 }
-
-/* Info-board styles for themes */
-.theme-light .info-board {
-    background-color: #e0f7fa; /* Light blue for light theme */
-}
-
-.theme-dark .info-board {
-    background-color: #263238; /* Dark gray for dark theme */
-    color: #ffffff;
-}
-
 
 /* Kleurrijk thema */
 body.colorful-theme {

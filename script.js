@@ -103,35 +103,44 @@ function giveHint(word) {
   }
 }
 
+// Check de ingevoerde antwoord
 function checkAnswer() {
   let inputLetters = document.querySelectorAll(".letter-box");
   let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
   let feedback = document.getElementById("feedback");
 
   if (wordChain[currentWord] === enteredWord) {
-    feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
-    feedback.style.color = "#336799";
-    feedback.classList.add("correct");
-    setTimeout(() => feedback.classList.remove("correct"), 500);
+      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
+      feedback.style.color = "#336799";
+      feedback.classList.add("correct");
+      setTimeout(() => feedback.classList.remove("correct"), 500);
 
-    currentWord = enteredWord;
-    document.getElementById("currentWord").textContent = currentWord;
+      currentWord = enteredWord; // Zet het nieuwe woord
+      document.getElementById("currentWord").textContent = currentWord;
 
-    if (!wordChain[currentWord]) {
-      showWinScreen();
-    } else {
-      createInputFields(wordChain[currentWord]);
-    }
+      if (!wordChain[currentWord]) {
+          showWinScreen();
+      } else {
+          createInputFields(wordChain[currentWord]);
+      }
 
-    score += 30;
-    updateBestScore();
+      // Speel het juiste geluid af
+      playCorrectSound();
+
+      // Voeg punten toe en update de score
+      score += 30;
+      updateBestScore();
   } else {
-    feedback.textContent = "❌ Incorrect! Try again.";
-    feedback.style.color = "red";
-    feedback.classList.add("wrong");
-    setTimeout(() => feedback.classList.remove("wrong"), 300);
+      feedback.textContent = "❌ Incorrect! Try again.";
+      feedback.style.color = "red";
+      feedback.classList.add("wrong");
+      setTimeout(() => feedback.classList.remove("wrong"), 300);
+
+      // Speel het foute geluid af
+      playWrongSound();
   }
 }
+
 
 function updateBestScore() {
   if (score > bestScore) {

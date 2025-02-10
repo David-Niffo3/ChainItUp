@@ -188,3 +188,37 @@ const wordChain = {
       document.getElementById("theme").value = savedTheme;
       document.body.className = savedTheme + "-theme";
   };
+
+function startDailyTimer() {
+    const timerElement = document.getElementById("dailyTimer");
+
+    function updateTimer() {
+        const now = new Date();
+        const utcHour = now.getUTCHours();
+        const utcMinute = now.getUTCMinutes();
+        const utcSecond = now.getUTCSeconds();
+
+        // Nederlandse tijd (UTC+1 in winter, UTC+2 in zomer)
+        const netherlandsOffset = now.getTimezoneOffset() === -120 ? 2 : 1;
+        const netherlandsHour = (utcHour + netherlandsOffset) % 24;
+
+        // Bereken hoe lang tot 12:00 NL tijd
+        let hoursLeft = 11 - netherlandsHour;
+        let minutesLeft = 59 - utcMinute;
+        let secondsLeft = 59 - utcSecond;
+
+        if (hoursLeft < 0) {
+            hoursLeft += 24; // Reset naar volgende dag
+        }
+
+        // Update de timer in de HTML
+        timerElement.textContent = `${String(hoursLeft).padStart(2, '0')}:${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
+    }
+
+    // Update elke seconde
+    setInterval(updateTimer, 1000);
+    updateTimer();
+}
+
+// Wacht tot de pagina is geladen en start dan de timer
+document.addEventListener("DOMContentLoaded", startDailyTimer);

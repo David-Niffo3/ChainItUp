@@ -1,0 +1,76 @@
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#player1Info, #player2Info {
+  margin-bottom: 20px;
+}
+
+#inputContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.letter-box {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  border: 2px solid #336799;
+  background-color: #669ACC;
+  color: #336799;
+  font-weight: bold;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #9ACEFF;
+  color: #336799;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #669ACC;
+}
+
+#feedback {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #336799;
+}
+
+.correct {
+  animation: correctAnim 0.5s ease-in-out;
+}
+
+@keyframes correctAnim {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.wrong {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}

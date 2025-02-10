@@ -245,7 +245,7 @@ body.colorful-theme .container {
 }
 
 .score-container {
-    background: linear-gradient(135deg, #336799, #669ACC);
+    background: rgb(0, 0, 0);
     color: white;
     padding: 15px;
     border-radius: 10px;

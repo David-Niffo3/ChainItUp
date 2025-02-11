@@ -249,6 +249,8 @@ function onGameEnd(name, score) {
 resetLeaderboardIfNewDay();
 updateLeaderboard(); // Update het leaderboard als de pagina wordt geladen
 
+// Zet bijvoorbeeld de speler en score hier in wanneer het spel eindigt:
+onGameEnd("SpelerNaam", score); // Vervang "SpelerNaam" met de naam van de speler
 
 
 // Wacht tot de pagina is geladen en start dan de timer

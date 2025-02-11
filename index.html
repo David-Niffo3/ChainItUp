@@ -1,35 +1,21 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YS5YRS7KCM"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-YS5YRS7KCM');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChainItUp - Word Guessing Game</title>
     <link rel="stylesheet" href="style.css">
-    <title>Chain Word Guessing Game - Play Now!</title>
-    <meta name="description" content="Play the best chain word guessing game! Start with a word and guess the next related word. Can you complete the chain?">
-    <meta name="keywords" content="word guessing game, chain words, word challenge, fun word game">
 </head>
 <body>
 
     <div class="theme-selector">
-    <label for="theme">Choose a theme:</label>
-    <select id="theme" onchange="changeTheme()">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="colorful">Colorful</option>
-    </select>
-</div>
-
+        <label for="theme">Choose a theme:</label>
+        <select id="theme" onchange="changeTheme()">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="colorful">Colorful</option>
+        </select>
+    </div>
 
     <!-- Game Section -->
     <div class="container" id="gameContainer">
@@ -38,36 +24,24 @@
         <p>Starting word: <strong id="currentWord"></strong></p>
         
         <!-- Score Display -->
-        <p>Score: <span id="score">100</span></p> <!-- Score wordt hier getoond -->
-        <p>Best Score: <span id="bestScore">0</span></p> <!-- Best Score wordt hier getoond -->
+        <p>Score: <span id="score">100</span></p>
+        <p>Best Score: <span id="bestScore">0</span></p>
 
-        <div id="inputContainer"></div>  <!-- Letter boxes will be generated here -->
+        <div id="inputContainer"></div>
         
         <button onclick="checkAnswer()">Check</button>
         <p id="feedback"></p>
     </div>
 
+    <!-- Win Screen -->
     <div class="container hidden" id="winScreen">
         <h1>🎉 You Won! 🎉</h1>
         <p>Congratulations! You completed the word chain.</p>
         <button onclick="restartGame()">Play Again</button>
     </div>
-    
 
-    <!-- Info Section at the bottom -->
-    <div class="info-board">
-    <h2>How to Play:</h2>
-    <p>Start with a word and try to guess the next word in the chain (e.g., apple → tree).</p>
-    <ul>
-        <li>Type each letter in the boxes to guess the word.</li>
-        <li>Press <strong>Enter</strong> to submit your guess. Use <strong>Backspace</strong> to delete letters.</li>
-        <li>If you can't guess the word within 30 seconds, a letter will be given to help you!</li>
-        <li>The chain will grow as you guess correctly, but the timer and score will be ticking down.</li>
-        <li>You can choose a theme for a unique look of the game.</li>
-    </ul>
-    <p>Good luck and have fun!</p>
-</div>
-
+    <!-- Daily Leaderboard -->
+    <div class="container" id="leaderboard"></div>
 
     <script src="script.js"></script>
 </body>

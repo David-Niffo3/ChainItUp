@@ -252,6 +252,8 @@ updateLeaderboard(); // Update het leaderboard als de pagina wordt geladen
 // Zet bijvoorbeeld de speler en score hier in wanneer het spel eindigt:
 onGameEnd("SpelerNaam", score); // Vervang "SpelerNaam" met de naam van de speler
 
+const playerName = document.getElementById("playerName").value;
+onGameEnd(playerName, score);
 
 // Wacht tot de pagina is geladen en start dan de timer
 document.addEventListener("DOMContentLoaded", startDailyTimer);

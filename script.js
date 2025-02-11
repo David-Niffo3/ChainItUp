@@ -1,4 +1,3 @@
-
 const wordChain = {
     "door": "bell",
     "bell": "end",
@@ -7,125 +6,185 @@ const wordChain = {
     "night": "stand",
     "stand": "up",
     "up": "hill",
-  };
-  
-  let currentWord = "door";
-  let score = 100;
-  let bestScore = localStorage.getItem("bestScore") || 0;
-  let hintTimer;
-  
-  document.getElementById("currentWord").textContent = currentWord;
-  document.getElementById("score").textContent = score;
-  document.getElementById("bestScore").textContent = bestScore;
-  
-  const scoreInterval = setInterval(() => {
+};
+
+let currentWord = "door";
+let score = 100;
+let bestScore = localStorage.getItem("bestScore") || 0;
+let hintTimer;
+
+const leaderboardKey = "dailyLeaderboard"; // Key voor localStorage
+const now = new Date();
+const currentDate = now.toLocaleDateString(); // Vandaag's datum (gebruiken voor daily leaderboard)
+
+document.getElementById("currentWord").textContent = currentWord;
+document.getElementById("score").textContent = score;
+document.getElementById("bestScore").textContent = bestScore;
+
+const scoreInterval = setInterval(() => {
     if (score > 0) {
-      score--;
-      document.getElementById("score").textContent = score;
+        score--;
+        document.getElementById("score").textContent = score;
     }
-  }, 1000);
-  
-  function createInputFields(word) {
+}, 1000);
+
+function getLeaderboard() {
+    const storedLeaderboard = localStorage.getItem(leaderboardKey);
+    if (storedLeaderboard) {
+        return JSON.parse(storedLeaderboard);
+    }
+    return [];
+}
+
+function saveLeaderboard(leaderboard) {
+    localStorage.setItem(leaderboardKey, JSON.stringify(leaderboard));
+}
+
+function resetLeaderboardIfNewDay() {
+    const storedDate = localStorage.getItem("leaderboardDate");
+    if (storedDate !== currentDate) {
+        localStorage.removeItem(leaderboardKey); // Verwijder leaderboard van vorige dag
+        localStorage.setItem("leaderboardDate", currentDate); // Sla de nieuwe datum op
+    }
+}
+
+function addScoreToLeaderboard(name, score) {
+    const leaderboard = getLeaderboard();
+    leaderboard.push({ name, score });
+    leaderboard.sort((a, b) => b.score - a.score); // Sorteer op score van hoog naar laag
+    leaderboard.splice(10); // Beperk de lijst tot de top 10
+
+    saveLeaderboard(leaderboard);
+}
+
+function displayLeaderboard() {
+    const leaderboard = getLeaderboard();
+    const leaderboardContainer = document.getElementById("leaderboard");
+    leaderboardContainer.innerHTML = "<h2>Daily Leaderboard</h2>";
+
+    leaderboard.forEach((entry, index) => {
+        leaderboardContainer.innerHTML += `<p>${index + 1}. ${entry.name}: ${entry.score}</p>`;
+    });
+}
+
+function createInputFields(word) {
     const container = document.getElementById("inputContainer");
     container.innerHTML = "";
-  
+
     for (let i = 0; i < word.length; i++) {
-      let input = document.createElement("input");
-      input.type = "text";
-      input.classList.add("letter-box");
-      input.maxLength = 1;
-      input.setAttribute("data-index", i);
-  
-      input.addEventListener("input", function () {
-        if (this.value.length === 1) {
-          let nextInput = this.nextElementSibling;
-          if (nextInput && !nextInput.disabled) nextInput.focus();
-        }
-      });
-  
-      input.addEventListener("keydown", function (event) {
-        if (event.key === "Backspace" && this.value === "") {
-          let prevInput = this.previousElementSibling;
-          if (prevInput && !prevInput.disabled) {
-            prevInput.value = "";
-            prevInput.focus();
-          }
-        }
-        if (event.key === "Enter") {
-          checkAnswer();
-        }
-      });
-  
-      container.appendChild(input);
+        let input = document.createElement("input");
+        input.type = "text";
+        input.classList.add("letter-box");
+        input.maxLength = 1;
+        input.setAttribute("data-index", i);
+
+        input.addEventListener("input", function () {
+            if (this.value.length === 1) {
+                let nextInput = this.nextElementSibling;
+                if (nextInput && !nextInput.disabled) nextInput.focus();
+            }
+        });
+
+        input.addEventListener("keydown", function (event) {
+            if (event.key === "Backspace" && this.value === "") {
+                let prevInput = this.previousElementSibling;
+                if (prevInput && !prevInput.disabled) {
+                    prevInput.value = "";
+                    prevInput.focus();
+                }
+            }
+            if (event.key === "Enter") {
+                checkAnswer();
+            }
+        });
+
+        container.appendChild(input);
     }
-  
+
     if (container.firstChild) {
-      container.firstChild.focus();
+        container.firstChild.focus();
     }
-  
+
     clearTimeout(hintTimer);
     hintTimer = setTimeout(() => giveHint(word), 30000);
-  }
-  
-  function giveHint(word) {
+}
+
+function giveHint(word) {
     let inputLetters = document.querySelectorAll(".letter-box");
     let correctWord = wordChain[currentWord];
-  
+
     for (let i = 0; i < correctWord.length; i++) {
-      if (inputLetters[i].value === "") {
-        inputLetters[i].value = correctWord[i];
-        inputLetters[i].disabled = true; // Vergrendelt de hintletter
-        inputLetters[i].classList.add("hint-letter"); // Optioneel: visuele stijl toevoegen
-        break;
-      }
+        if (inputLetters[i].value === "") {
+            inputLetters[i].value = correctWord[i];
+            inputLetters[i].disabled = true; // Vergrendelt de hintletter
+            inputLetters[i].classList.add("hint-letter"); // Optioneel: visuele stijl toevoegen
+            break;
+        }
     }
-  }
-  
-  function checkAnswer() {
+}
+
+function checkAnswer() {
     let inputLetters = document.querySelectorAll(".letter-box");
     let enteredWord = Array.from(inputLetters).map(input => input.value.toLowerCase()).join("");
     let feedback = document.getElementById("feedback");
-  
+
     if (wordChain[currentWord] === enteredWord) {
-      feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
-      feedback.style.color = "#336799";
-      feedback.classList.add("correct");
-      setTimeout(() => feedback.classList.remove("correct"), 500);
-  
-      currentWord = enteredWord;
-      document.getElementById("currentWord").textContent = currentWord;
-  
-      if (!wordChain[currentWord]) {
-        showWinScreen();
-      } else {
-        createInputFields(wordChain[currentWord]);
-      }
-  
-      score += 30;
-      updateBestScore();
+        feedback.textContent = `✅ ${currentWord} + ${enteredWord} = ${currentWord}${enteredWord}`;
+        feedback.style.color = "#336799";
+        feedback.classList.add("correct");
+        setTimeout(() => feedback.classList.remove("correct"), 500);
+
+        currentWord = enteredWord;
+        document.getElementById("currentWord").textContent = currentWord;
+
+        if (!wordChain[currentWord]) {
+            showWinScreen();
+        } else {
+            createInputFields(wordChain[currentWord]);
+        }
+
+        score += 30;
+        updateBestScore();
     } else {
-      feedback.textContent = "❌ Incorrect! Try again.";
-      feedback.style.color = "red";
-      feedback.classList.add("wrong");
-      setTimeout(() => feedback.classList.remove("wrong"), 300);
+        feedback.textContent = "❌ Incorrect! Try again.";
+        feedback.style.color = "red";
+        feedback.classList.add("wrong");
+        setTimeout(() => feedback.classList.remove("wrong"), 300);
     }
-  }
-  
-  function updateBestScore() {
+}
+
+function updateBestScore() {
     if (score > bestScore) {
-      bestScore = score;
-      localStorage.setItem("bestScore", bestScore);
-      document.getElementById("bestScore").textContent = bestScore;
+        bestScore = score;
+        localStorage.setItem("bestScore", bestScore);
+        document.getElementById("bestScore").textContent = bestScore;
     }
-  }
-  
-  function showWinScreen() {
+}
+
+function showWinScreen() {
     document.getElementById("gameContainer").classList.add("hidden");
     document.getElementById("winScreen").classList.remove("hidden");
     clearInterval(scoreInterval);
-  }
-  
-  function restartGame() {
+
+    // Naam invoeren na winnen
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.placeholder = "Enter your name";
+    document.getElementById("winScreen").appendChild(nameInput);
+
+    nameInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            const name = nameInput.value.trim();
+            if (name) {
+                addScoreToLeaderboard(name, score);
+                displayLeaderboard();
+            }
+            restartGame();
+        }
+    });
+}
+
+function restartGame() {
     score = 100;
     currentWord = "apple";
     document.getElementById("currentWord").textContent = currentWord;
@@ -134,38 +193,15 @@ const wordChain = {
     document.getElementById("winScreen").classList.add("hidden");
     document.getElementById("feedback").textContent = "";
     createInputFields(wordChain[currentWord]);
-  
+
     clearInterval(scoreInterval);
     setInterval(() => {
-      if (score > 0) {
-        score--;
-        document.getElementById("score").textContent = score;
-      }
+        if (score > 0) {
+            score--;
+            document.getElementById("score").textContent = score;
+        }
     }, 1000);
-  }
-  
-  createInputFields(wordChain[currentWord]);
-  
-  // Thema wisselen en opslaan in localStorage
-  function changeTheme() {
-      let selectedTheme = document.getElementById("theme").value;
-      document.body.className = selectedTheme + "-theme"; // Thema toepassen
-      localStorage.setItem("selectedTheme", selectedTheme); // Opslaan
-  }
-  
-  // Thema laden bij start
-  window.onload = function() {
-      let savedTheme = localStorage.getItem("selectedTheme") || "light";
-      document.getElementById("theme").value = savedTheme;
-      document.body.className = savedTheme + "-theme";
-  };
-  
-  // Thema laden bij start
-  window.onload = function() {
-      let savedTheme = localStorage.getItem("selectedTheme") || "light";
-      document.getElementById("theme").value = savedTheme;
-      document.body.className = savedTheme + "-theme";
-  };
+}
 
 function startDailyTimer() {
     const timerElement = document.getElementById("dailyTimer");
@@ -196,9 +232,12 @@ function startDailyTimer() {
     // Update elke seconde
     setInterval(updateTimer, 1000);
     updateTimer();
-
-    
 }
 
 // Wacht tot de pagina is geladen en start dan de timer
-document.addEventListener("DOMContentLoaded", startDailyTimer);
+document.addEventListener("DOMContentLoaded", function() {
+    resetLeaderboardIfNewDay();
+    displayLeaderboard();
+    startDailyTimer();
+});
+

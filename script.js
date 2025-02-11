@@ -1,37 +1,14 @@
 const wordChain = {
-    "apple": "tree",
-    "tree": "house",
-    "house": "fire",
-    "fire": "fighter",
-    "fighter": "jet",
-    "jet": "engine",
-    "engine": "speed",
-    "speed": "limit",
-    "limit": "break",
-    "break": "dance",
-    "dance": "floor",
-    "floor": "lamp",
-    "lamp": "light",
-    "light": "bulb",
-    "bulb": "plant",
-    "plant": "growth",
-    "growth": "mind",
-    "mind": "game",
-    "game": "level",
-    "level": "boss",
-    "boss": "fight",
-    "fight": "arena",
-    "arena": "crowd",
-    "crowd": "cheer",
-    "cheer": "happy",
-    "happy": "smile",
-    "smile": "teeth",
-    "teeth": "brush",
-    "brush": "paint",
-    "paint": "color"
+    "door": "bell",
+    "bell": "end",
+    "end": "game",
+    "game": "night",
+    "night": "stand",
+    "stand": "up",
+    "up": "hill",
   };
   
-  let currentWord = "apple";
+  let currentWord = "door";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

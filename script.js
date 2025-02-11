@@ -1,3 +1,4 @@
+
 const wordChain = {
     "door": "bell",
     "bell": "end",
@@ -195,65 +196,9 @@ function startDailyTimer() {
     // Update elke seconde
     setInterval(updateTimer, 1000);
     updateTimer();
-}
 
-// Functie om het leaderboard bij te werken
-function updateLeaderboard() {
-    const leaderboard = JSON.parse(localStorage.getItem("dailyLeaderboard")) || [];
-
-    // Sorteer de scores op aflopende volgorde (hoogste score bovenaan)
-    leaderboard.sort((a, b) => b.score - a.score);
-
-    const leaderboardList = document.getElementById("leaderboardList");
-    leaderboardList.innerHTML = ""; // Maak de lijst leeg voordat je de nieuwe scores weergeeft
-
-    leaderboard.forEach(player => {
-        const li = document.createElement("li");
-        li.textContent = `${player.name} - ${player.score} points`;
-        leaderboardList.appendChild(li);
-    });
-}
-
-// Functie om de score van een speler op te slaan
-function saveScore(name, score) {
-    let leaderboard = JSON.parse(localStorage.getItem("dailyLeaderboard")) || [];
     
-    // Voeg de nieuwe score toe aan de leaderboard
-    leaderboard.push({ name, score, timestamp: Date.now() });
-
-    // Bewaar de leaderboard in localStorage
-    localStorage.setItem("dailyLeaderboard", JSON.stringify(leaderboard));
-
-    // Update het leaderboard op de pagina
-    updateLeaderboard();
 }
-
-// Functie om te controleren of de score is gereset (op basis van datum)
-function resetLeaderboardIfNewDay() {
-    const now = new Date();
-    const lastResetDate = localStorage.getItem("lastResetDate");
-
-    if (!lastResetDate || new Date(lastResetDate).toDateString() !== now.toDateString()) {
-        // Reset de leaderboard als het een nieuwe dag is
-        localStorage.setItem("dailyLeaderboard", JSON.stringify([]));
-        localStorage.setItem("lastResetDate", now.toISOString());
-    }
-}
-
-// Functie om de score in te stellen (bijvoorbeeld na het winnen van het spel)
-function onGameEnd(name, score) {
-    saveScore(name, score);
-}
-
-// Start het proces om te controleren of de score moet worden gereset bij een nieuwe dag
-resetLeaderboardIfNewDay();
-updateLeaderboard(); // Update het leaderboard als de pagina wordt geladen
-
-// Zet bijvoorbeeld de speler en score hier in wanneer het spel eindigt:
-onGameEnd("SpelerNaam", score); // Vervang "SpelerNaam" met de naam van de speler
-
-const playerName = document.getElementById("playerName").value;
-onGameEnd(playerName, score);
 
 // Wacht tot de pagina is geladen en start dan de timer
 document.addEventListener("DOMContentLoaded", startDailyTimer);

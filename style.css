@@ -71,7 +71,7 @@ p {
 
 /* 🎁 Stijl voor hintletters (vergrendeld) */
 .hint-letter {
-    background-color: #e75858; /* Donkergrijze achtergrond */
+    background-color: #008000; /* Donkergrijze achtergrond */
     color: white; /* Witte tekst */
     font-weight: bold;
     border: 2px solid #444; /* Donkerdere rand */

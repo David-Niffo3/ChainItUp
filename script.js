@@ -1,15 +1,19 @@
 
 const wordChain = {
-    "door": "bell",
-    "bell": "end",
-    "end": "game",
-    "game": "night",
-    "night": "stand",
-    "stand": "up",
-    "up": "hill",
+    "battle": "ring",
+    "ring": "finger",
+    "finger": "top",
+    "top": "gun",
+    "gun": "shot",
+    "shot": "shell",
+    "shell": "fish",
+    "fish": "eye",
+    "eye": "ball",
+    "ball": "sports",
+    "sports": "wear",
   };
   
-  let currentWord = "door";
+  let currentWord = "battle";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

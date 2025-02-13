@@ -1,6 +1,5 @@
 
 const wordChain = {
-    const wordChain = {
     "rain": "cloud",
     "cloud": "sky",
     "sky": "blue",

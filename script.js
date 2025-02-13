@@ -9,7 +9,6 @@ const wordChain = {
     "surf": "beach",
     "beach": "sand",
     "sand": "castle",
-};
 
   };
   

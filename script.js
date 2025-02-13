@@ -1,19 +1,20 @@
 
 const wordChain = {
-    "battle": "ring",
-    "ring": "finger",
-    "finger": "top",
-    "top": "gun",
-    "gun": "shot",
-    "shot": "shell",
-    "shell": "fish",
-    "fish": "eye",
-    "eye": "ball",
-    "ball": "sports",
-    "sports": "wear",
+    const wordChain = {
+    "rain": "cloud",
+    "cloud": "sky",
+    "sky": "blue",
+    "blue": "ocean",
+    "ocean": "wave",
+    "wave": "surf",
+    "surf": "beach",
+    "beach": "sand",
+    "sand": "castle",
+};
+
   };
   
-  let currentWord = "battle";
+  let currentWord = "rain";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

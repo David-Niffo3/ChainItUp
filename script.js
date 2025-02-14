@@ -128,7 +128,7 @@ const wordChain = {
   
   function restartGame() {
     score = 100;
-    currentWord = "apple";
+    currentWord = "black";
     document.getElementById("currentWord").textContent = currentWord;
     document.getElementById("score").textContent = score;
     document.getElementById("gameContainer").classList.remove("hidden");

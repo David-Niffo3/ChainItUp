@@ -10,7 +10,7 @@ const wordChain = {
 
   };
   
-  let currentWord = "rain";
+  let currentWord = "black";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

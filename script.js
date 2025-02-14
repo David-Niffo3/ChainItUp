@@ -1,14 +1,12 @@
 
 const wordChain = {
-    "rain": "cloud",
-    "cloud": "sky",
-    "sky": "blue",
-    "blue": "ocean",
-    "ocean": "wave",
-    "wave": "surf",
-    "surf": "beach",
-    "beach": "sand",
-    "sand": "castle",
+    "black": "out",
+    "out": "side",
+    "side": "eye",
+    "eye": "ball",
+    "ball": "room",
+    "room": "table",
+    "table": "spoon",
 
   };
   

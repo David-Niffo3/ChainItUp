@@ -143,14 +143,11 @@ const wordChain = {
       if (score > 0) {
         score--;
         document.getElementById("score").textContent = score;
-
-
-    createInputFields(wordChain[currentWord]);
       }
     }, 1000);
   }
   
-  
+  createInputFields(wordChain[currentWord]);
   
   // Thema wisselen en opslaan in localStorage
   function changeTheme() {

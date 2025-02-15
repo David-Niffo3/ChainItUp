@@ -147,7 +147,7 @@ const wordChain = {
     }, 1000);
   }
   
-  createInputFields(wordChain[currentWord]);
+  
   
   // Thema wisselen en opslaan in localStorage
   function changeTheme() {

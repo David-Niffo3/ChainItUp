@@ -143,6 +143,9 @@ const wordChain = {
       if (score > 0) {
         score--;
         document.getElementById("score").textContent = score;
+
+
+    createInputFields(wordChain[currentWord]);
       }
     }, 1000);
   }

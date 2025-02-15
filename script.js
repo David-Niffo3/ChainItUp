@@ -1,16 +1,18 @@
 
 const wordChain = {
-    "black": "out",
-    "out": "side",
-    "side": "eye",
-    "eye": "ball",
-    "ball": "room",
-    "room": "table",
-    "table": "spoon",
+    "fire": "place",
+    "place": "card",
+    "card": "trick",
+    "trick": "shot",
+    "shot": "glass",
+    "glass": "house",
+    "house": "plant",
+    "plant": "life",
+    "life": "cycle",
 
   };
   
-  let currentWord = "black";
+  let currentWord = "fire";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;
@@ -128,7 +130,7 @@ const wordChain = {
   
   function restartGame() {
     score = 100;
-    currentWord = "black";
+    currentWord = "fire";
     document.getElementById("currentWord").textContent = currentWord;
     document.getElementById("score").textContent = score;
     document.getElementById("gameContainer").classList.remove("hidden");

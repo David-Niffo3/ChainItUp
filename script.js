@@ -5,7 +5,7 @@ const wordChain = {
     "power": "boat",
     "boat": "yard",
     "yard": "field",
-    "field": "stick"
+    "field": "stick",
     "stick": "man",
     "man": "hunt",
 

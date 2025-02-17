@@ -1,18 +1,17 @@
 
 const wordChain = {
-    "fire": "place",
-    "place": "card",
-    "card": "trick",
-    "trick": "shot",
-    "shot": "glass",
-    "glass": "house",
-    "house": "plant",
-    "plant": "life",
-    "life": "cycle",
+    "sun": "flower",
+    "flower": "power",
+    "power": "boat",
+    "boat": "yard",
+    "yard": "field",
+    "field": "stick"
+    "stick": "man",
+    "man": "hunt",
 
   };
   
-  let currentWord = "fire";
+  let currentWord = "sun";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

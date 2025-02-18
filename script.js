@@ -129,7 +129,7 @@ const wordChain = {
   
   function restartGame() {
     score = 100;
-    currentWord = "fire";
+    currentWord = "sun";
     document.getElementById("currentWord").textContent = currentWord;
     document.getElementById("score").textContent = score;
     document.getElementById("gameContainer").classList.remove("hidden");

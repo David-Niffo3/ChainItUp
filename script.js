@@ -5,6 +5,7 @@ const wordChain = {
     "jump": "high",
     "high": "five",
     "five": "m",
+    "m": "donald",
     "donald": "duck",
     "duck": "fat",
     "fat": "bitch",

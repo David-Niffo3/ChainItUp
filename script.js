@@ -1,17 +1,26 @@
 
 const wordChain = {
-    "sun": "flower",
-    "flower": "power",
-    "power": "boat",
-    "boat": "yard",
-    "yard": "field",
-    "field": "stick",
-    "stick": "man",
-    "man": "hunt",
+    "brick": "wall",
+    "wall": "jump",
+    "jump": "high",
+    "high": "five",
+    "five": "m",
+    "donald": "duck",
+    "duck": "fat",
+    "fat": "bitch",
+    "bitch": "ass",
+    "ass": "hole",
+    "hole": "fuck",
+    "fuck": "hard",
+    "hard": "dick",
+    "dick": "suck",
+    "suck": "tight",
+    "tight": "pussy",
+    "pussy": "wet",
 
   };
   
-  let currentWord = "sun";
+  let currentWord = "brick";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

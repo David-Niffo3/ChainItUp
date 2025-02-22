@@ -1,27 +1,22 @@
 
 const wordChain = {
-    "brick": "wall",
-    "wall": "jump",
-    "jump": "high",
-    "high": "five",
-    "five": "m",
-    "m": "donald",
-    "donald": "duck",
-    "duck": "fat",
-    "fat": "bitch",
-    "bitch": "ass",
-    "ass": "hole",
-    "hole": "fuck",
-    "fuck": "hard",
-    "hard": "dick",
-    "dick": "suck",
-    "suck": "tight",
-    "tight": "pussy",
-    "pussy": "wet",
+    "apple": "tree",
+    "tree": "house",
+    "house": "party",
+    "party": "dance",
+    "dance": "floor",
+    "floor": "lamp",
+    "lamp": "shade",
+    "shade": "sun",
+    "sun": "burn",
+    "burn": "out",
+    "out": "side",
+
+
 
   };
   
-  let currentWord = "brick";
+  let currentWord = "apple";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;
@@ -139,7 +134,7 @@ const wordChain = {
   
   function restartGame() {
     score = 100;
-    currentWord = "sun";
+    currentWord = "apple";
     document.getElementById("currentWord").textContent = currentWord;
     document.getElementById("score").textContent = score;
     document.getElementById("gameContainer").classList.remove("hidden");

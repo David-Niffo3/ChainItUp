@@ -1,22 +1,23 @@
 
 const wordChain = {
-    "apple": "tree",
-    "tree": "house",
-    "house": "party",
-    "party": "dance",
-    "dance": "floor",
-    "floor": "lamp",
-    "lamp": "shade",
-    "shade": "sun",
-    "sun": "burn",
-    "burn": "out",
-    "out": "side",
-
-
+    "tree": "leaf",
+    "leaf": "fall",
+    "fall": "water",
+    "water": "drop",
+    "drop": "stone",
+    "stone": "path",
+    "path": "way",
+    "way": "back",
+    "back": "side",
+    "side": "eye",
+    "eye": "ball",
+    "ball": "sport",
+    "sport": "club",
+    "club": "house"
 
   };
   
-  let currentWord = "apple";
+  let currentWord = "tree";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;
@@ -134,7 +135,7 @@ const wordChain = {
   
   function restartGame() {
     score = 100;
-    currentWord = "apple";
+    currentWord = "tree";
     document.getElementById("currentWord").textContent = currentWord;
     document.getElementById("score").textContent = score;
     document.getElementById("gameContainer").classList.remove("hidden");

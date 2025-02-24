@@ -1,23 +1,15 @@
 
 const wordChain = {
-    "tree": "leaf",
-    "leaf": "fall",
-    "fall": "water",
-    "water": "drop",
-    "drop": "stone",
-    "stone": "path",
-    "path": "way",
-    "way": "back",
-    "back": "side",
-    "side": "eye",
-    "eye": "ball",
-    "ball": "sport",
-    "sport": "club",
-    "club": "house"
+    "sword": "fight",
+    "fight": "ring",
+    "ring": "finger",
+    "finger": "paint",
+    "paint": "ball",
+    "ball": "point",
 
   };
   
-  let currentWord = "tree";
+  let currentWord = "sword";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;

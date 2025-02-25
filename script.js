@@ -1,15 +1,16 @@
 
 const wordChain = {
-    "sword": "fight",
-    "fight": "ring",
-    "ring": "finger",
-    "finger": "paint",
-    "paint": "ball",
-    "ball": "point",
+    "golf": "club",
+    "club": "music",
+    "music": "beat",
+    "beat": "box",
+    "box": "jump",
+    "jump": "rope",
+
 
   };
   
-  let currentWord = "sword";
+  let currentWord = "golf";
   let score = 100;
   let bestScore = localStorage.getItem("bestScore") || 0;
   let hintTimer;
